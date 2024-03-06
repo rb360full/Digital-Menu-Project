@@ -45,9 +45,12 @@
 
 /* ///////////////////////////////////////// */
 
-.header{
-    height: 200px;
-}
+
 .cat-item{
-    width: ;
+    width: 150px;
+    height: 150px;
+}
+
+#allCategoriesBtn{
+    
 }
