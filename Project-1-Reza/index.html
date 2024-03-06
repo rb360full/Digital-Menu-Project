@@ -1,44 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="far" dir="rtl">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Digital Menu</title>
-    <link rel="stylesheet" href="css/bootstrap.rtl.css">
-    <link rel="stylesheet" href="css/bootstrap-utilities.rtl.css">
-    <link rel="stylesheet" href="css/bootstrapExtra.rtl.css">
-    <link rel="stylesheet" href="css/style.css">
-
+    <!-- <link rel="stylesheet" href="css/Bootstrap-Used.css"> -->
+    <link rel="stylesheet" href="css/bootstrap.rtl.css" />
+    <link rel="stylesheet" href="css/bootstrapExtra.rtl.css" />
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body class="bg-seccondary">
-
-
-    <div class="header bg-primary row">
-        <div class="brand row"></div>
-        <div class="top-nav row">
-            <div class="all-cat row ">
-
-                <span id="allCategoriesBtn" class="">
-                    همه دسته‌بندی‌ها در یک نگاه
-                </span>
-
-            </div>
-            <div class="category row  justify-content-center align-items-center my-5">
-
-                <div class="cat-item bg-primary-subtle2 rounded rounded-3 d-flex flex-column justify-content-center align-items-center mx-5">
-                    <img class="w-60" src="images/icons/schedule.svg" alt="">
-                    <p>توضیحات | NOTE</p>
+    <div class="container-fluid p-0 mx-0">
+        <div class="header container-fluid mx-auto bg-primary row">
+            <div class="brand row"></div>
+            <div class="top-nav row">
+                <div class="all-cat row justify-content-center">
+                    <span id="allCategoriesBtn" class="bg-primary-subtle col-auto rounded rounded-5 px-5 py-1"> همه دسته‌بندی‌ها در یک نگاه </span>
                 </div>
+                <div class="category row justify-content-center align-items-center my-5">
+                    <!-- Category Item -->
+                    <div class="cat-item bg-primary-subtle2 rounded rounded-4 mx-5">
+                        <a href="#cat-title-note" class="d-flex flex-column justify-content-center align-items-center">
+                            <img class="w-60" src="images/icons/schedule.svg" alt="" />
+                            <p class="text-center">توضیحات | NOTE</p>
+                        </a>
+                    </div>
+                    <!-- Category Item -->
+
+
+                    <!-- Category Item -->
+                    <div class="cat-item bg-primary-subtle2 rounded rounded-4 mx-5">
+                        <a href="#cat-title-popular" class="d-flex flex-column justify-content-center align-items-center">
+                            <img class="w-60 p-2" src="images/icons/food.svg" alt="" />
+                            <p class="text-center">پرطرفدارها | POPULAR</p>
+                        </a>
+                    </div>
+                    <!-- Category Item -->
+
+                </div>
+
+
+
+
+
 
 
             </div>
         </div>
     </div>
-    <div class="main "></div>
-    <div class="footer"></div>
+    <div class="main container-fluid">
 
+
+        <!-- Food Items -->
+
+        <!-- Title -->
+        <div id="cat-title-note" class="category-title d-flex flex-column justify-content-center align-items-center mt-3 position-relative">
+            <span class="bg-seccondary text-primary fw-bolder fs-5 position-absolute px-3">« توضیحات | NOTE »</span>
+            <div class="bg-seccondary-subtle3 p-1s w-80 rounded rounded-1"></div>
+        </div>
+        <!-- Title -->
+        <!-- item -->
+        <div class="menu-item bg-secondary-subtle text-white w-md-50">
+
+            <h5 class="menu-item-title bg-seccondary-subtle mb-0 mt-4 "> توضیحات 👇 </h5>
+            <div class="menu-item-content bg-seccondary-subtle ">
+                <p>🔸به منظور سرویس‌دهی بهتر به شما عزیزان، میزان استفاده از منوی مجموعه در <strong>ساعات شلوغ ۲ ساعت</strong> می‌باشد.<br>🔸۹٪ ارزش
+                    افزوده به صورت‌حساب اضافه می‌شود.</p>
+                <p>🔸لطفا ما را از هر نوع آلرژی غذایی خود باخبر کنید.&nbsp;</p>
+            </div>
+        </div>
+        <!-- item -->
+
+
+        <!-- Title -->
+        <div id="cat-title-note" class="category-title d-flex flex-column justify-content-center align-items-center mt-3 position-relative">
+            <span class="bg-seccondary text-primary fw-bolder fs-5 position-absolute px-3">« توضیحات | NOTE »</span>
+            <div class="bg-seccondary-subtle3 p-1s w-80 rounded rounded-1"></div>
+        </div>
+        <!-- Title -->
+        <!-- item -->
+        <div class="menu-item row bg-secondary-subtle text-white w-md-50">
+            <div class="col-3">
+                <h5 class="menu-item-title bg-seccondary-subtle mb-0 mt-4 "> توضیحات 👇 </h5>
+                <div class="menu-item-content bg-seccondary-subtle ">
+                    <p>🔸به منظور سرویس‌دهی بهتر به شما عزیزان، میزان استفاده از منوی مجموعه در <strong>ساعات شلوغ ۲ ساعت</strong> می‌باشد.<br>🔸۹٪ ارزش
+                        افزوده به صورت‌حساب اضافه می‌شود.</p>
+                    <p>🔸لطفا ما را از هر نوع آلرژی غذایی خود باخبر کنید.&nbsp;</p>
+                </div>
+            </div>
+            <div class="col-9">
+
+            </div>
+        </div>
+        <!-- item -->
+
+
+
+
+        <!-- Food Items -->
+
+
+    </div>
+    <div class="footer"></div>
 </body>
 
 </html>

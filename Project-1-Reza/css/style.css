@@ -1,15 +1,15 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
 :root {
-  --om-primary: #DC5F00;
-  --om-primary-dark: #C15300;
-  --om-primary-subtle: #E0721F;
-  --om-primary-subtle2: #E78F4D;
-  --om-primary-subtle3: #EEAF80;
+  --om-primary: #dc5f00;
+  --om-primary-dark: #c15300;
+  --om-primary-subtle: #e0721f;
+  --om-primary-subtle2: #e78f4d;
+  --om-primary-subtle3: #eeaf80;
 
-  --om-secondary: #2D2D2E;
-  --om-secondary-subtle: #3B3B3C;
+  --om-secondary: #2d2d2e;
+  --om-secondary-subtle: #3b3b3c;
   --om-secondary-subtle2: #444446;
-  
+  --om-secondary-subtle3: #a4a4a4;
 
   --om-success: #551bf8;
   --om-dark: #1b263b;
@@ -20,6 +20,9 @@
 }
 .bg-primary {
   background-color: var(--om-primary) !important;
+}
+.text-primary {
+  color: var(--om-primary) !important;
 }
 .bg-primary-dark {
   background-color: var(--om-primary-dark) !important;
@@ -42,15 +45,27 @@
 .bg-seccondary-subtle2 {
   background-color: var(--om-secondary-subtle2) !important;
 }
+.bg-seccondary-subtle3 {
+  background-color: var(--om-secondary-subtle3) !important;
+}
+.bg-inherit{
+    background-color: var(--parent-bg-color);
+
+}
 
 /* ///////////////////////////////////////// */
 
-
-.cat-item{
-    width: 150px;
-    height: 150px;
+.cat-item {
+  width: 150px;
+  height: 150px;
 }
 
-#allCategoriesBtn{
-    
+.category-title > div {
+  /* background: linear-gradient(to right, transparent 80%, var(--om-secondary)); */
+  background: linear-gradient(to right , var(--om-secondary) ,transparent 80%, var(--om-secondary));
+}
+
+a{
+    all: unset;
+    cursor: pointer;
 }

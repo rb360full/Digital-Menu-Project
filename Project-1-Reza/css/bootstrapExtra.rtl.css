@@ -325,6 +325,13 @@
   top: 99999% !important;
 }
 
+
+.p-1s {
+  padding: 0.1rem !important;
+}
+
+
+
 @media (min-width: 576px) {
   .w-sm-0 {
     width: 0% !important;
