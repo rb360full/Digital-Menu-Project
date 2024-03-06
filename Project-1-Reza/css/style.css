@@ -1,0 +1,53 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+:root {
+  --om-primary: #DC5F00;
+  --om-primary-dark: #C15300;
+  --om-primary-subtle: #E0721F;
+  --om-primary-subtle2: #E78F4D;
+  --om-primary-subtle3: #EEAF80;
+
+  --om-secondary: #2D2D2E;
+  --om-secondary-subtle: #3B3B3C;
+  --om-secondary-subtle2: #444446;
+  
+
+  --om-success: #551bf8;
+  --om-dark: #1b263b;
+  --om-dark-subtle: #2c3a56;
+  --om-info: #04c4c9;
+  --om-info-dark: #0e8590;
+  --om-blue: #081d40;
+}
+.bg-primary {
+  background-color: var(--om-primary) !important;
+}
+.bg-primary-dark {
+  background-color: var(--om-primary-dark) !important;
+}
+.bg-primary-subtle {
+  background-color: var(--om-primary-subtle) !important;
+}
+.bg-primary-subtle2 {
+  background-color: var(--om-primary-subtle2) !important;
+}
+.bg-primary-subtle3 {
+  background-color: var(--om-primary-subtle3) !important;
+}
+.bg-seccondary {
+  background-color: var(--om-secondary) !important;
+}
+.bg-seccondary-subtle {
+  background-color: var(--om-secondary-subtle) !important;
+}
+.bg-seccondary-subtle2 {
+  background-color: var(--om-secondary-subtle2) !important;
+}
+
+/* ///////////////////////////////////////// */
+
+.header{
+    height: 200px;
+}
+.cat-item{
+    width: ;
+}
