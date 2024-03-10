@@ -18,6 +18,8 @@ const category = [
     { id: 10, title: "قهوه | COFFEE", imgName: "COFFEE.svg" },
 ];
 
+
+
 const foods = [
     {
         id: 1,
@@ -99,11 +101,11 @@ function generateCatogoryItems() {
     });
 }
 
-const generateMenuItems = (categoryId) => {
-    let cat = category.find((item) => item.id === categoryId);
+const generateMenuItems = (...categoryArray) => {
 
-
-    mainContainer.insertAdjacentHTML("beforeend", `
+    categoryArray.forEach(cat => {
+        foods.some(item => item.categoryId == cat.id) ?
+            mainContainer.insertAdjacentHTML("beforeend", `
     <!-- Title -->
     <p id="cat-${cat.id}" class="pt-1" ></p>    
     <div  class="category-title d-flex flex-column justify-content-center align-items-center position-relative mt-5 mb-5 ">
@@ -112,14 +114,14 @@ const generateMenuItems = (categoryId) => {
     </div>
     <!-- Title -->
     `
-    );
+            ) : null;
 
-    const catFoods = foods.filter((item) => item.categoryId === cat.id);
+        const catFoods = foods.filter((item) => item.categoryId === cat.id);
 
-    catFoods.forEach((item) => {
-        if (item.isOptional) {
-            const minPrice = Math.min(...item.price);
-            mainContainer.insertAdjacentHTML("beforeend", `
+        catFoods.forEach((item) => {
+            if (item.isOptional) {
+                const minPrice = Math.min(...item.price);
+                mainContainer.insertAdjacentHTML("beforeend", `
         <!-- item -->
         <div class="menu-item row bg-secondary-subtle2 text-white w-md-50 my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
             <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
@@ -147,20 +149,20 @@ const generateMenuItems = (categoryId) => {
         </div>
         <!-- item -->
         `
-            );
+                );
 
-            let summaryUl = document.querySelector(`#food-${item.id}-option`);
-            for (let i = 0; i < item.options.length; i++) {
-                summaryUl.insertAdjacentHTML("beforeend", `
+                let summaryUl = document.querySelector(`#food-${item.id}-option`);
+                for (let i = 0; i < item.options.length; i++) {
+                    summaryUl.insertAdjacentHTML("beforeend", `
                 <li class="d-flex  justify-content-between w-80 py-2">
                     <span class="">${item.options[i]}</span>
                     <strong class="text-primary fw-bold">${item.price[i]}<small class="fs-7">هزار تومان</small></strong>
                 </li>
                 `
-                );
-            }
-        } else {
-            mainContainer.insertAdjacentHTML("beforeend", `
+                    );
+                }
+            } else {
+                mainContainer.insertAdjacentHTML("beforeend", `
         <!-- item -->
         <div class="menu-item row bg-secondary-subtle2 text-white w-md-50 my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
             <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
@@ -179,16 +181,18 @@ const generateMenuItems = (categoryId) => {
         </div>
         <!-- item -->
         `
-            );
-        }
-    });
+                );
+            }
+        });
+    })
 };
 
 // Call Faunctions
 
 generateCatogoryItems();
 
-generateMenuItems(4);
-generateMenuItems(7);
+
+
+generateMenuItems(...category);
 
 // Events
