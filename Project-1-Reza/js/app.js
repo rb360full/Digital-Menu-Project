@@ -2,6 +2,17 @@
 
 const mainContainer = document.querySelector(".main");
 const categoryContainer = document.querySelector(".category");
+const categoryElem = document.querySelector('.category')
+
+let headerHeight = document.querySelector('.header').offsetHeight;
+console.log(headerHeight);
+categoryElem.addEventListener('click', e => {
+    console.log(e.target);
+    e.target
+})
+
+
+
 
 
 // DataBase

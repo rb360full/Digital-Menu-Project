@@ -63,6 +63,12 @@
   font-family: iranSans;
 }
 
+.header{
+  /* height : 500px; */
+}
+
+
+
 .cat-item {
   width: 150px;
   height: 150px;
@@ -120,7 +126,7 @@ ul > li:last-child {
   border-bottom: none !important ;
 }
 
-.header {
+/* .header {
   position: sticky;
-  top: 0;
-}
+  top: 0px;
+} */

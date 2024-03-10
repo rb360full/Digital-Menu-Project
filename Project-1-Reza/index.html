@@ -12,22 +12,34 @@
 </head>
 
 <body class="bg-secondary">
-    <div class="container-fluid p-0 mx-0">
-        <div class="header container-fluid mx-auto bg-primary row">
-            <div class="brand row"></div>
-            <div class="top-nav row justify-content-center">
-                <div class="all-cat row justify-content-center">
-                    <span id="allCategoriesBtn" class="bg-primary-subtle col-auto rounded rounded-5 px-5 py-1"> همه دسته‌بندی‌ها در یک نگاه </span>
-                </div>
-                <div class="category flex-column mx-auto row justify-content-center align-items-center my-5 d-flex">
-                    <!-- Category Item -->
 
-                    <!-- Category Item -->
+    <div class="header container-fluid mx-auto bg-primary row sticky-top border">
+        <div class="brand row"></div>
+        <div class="top-nav row justify-content-center">
+            <div class="all-cat row justify-content-center">
+                <a href="#main-container" id="allCategoriesBtn" class="bg-primary-subtle col-auto rounded rounded-5 px-5 py-1 mt-3"> همه دسته‌بندی‌ها در یک نگاه
+                </a>
+            </div>
+            <div class="category flex-column mx-auto row justify-content-center align-items-center my-5 d-flex">
+                <!-- Category Item -->
+
+
+                <div class="cat-item bg-primary-subtle2 rounded rounded-4 ms-4 pt-2">
+                    <a href="#cat-4" class="d-flex flex-column justify-content-center align-items-center">
+                        <img class="w-60" src="images/icons/${catItem.imgName}" alt="" />
+                        <p class="text-center">REZA</p>
+                    </a>
                 </div>
+
+
+
+
+                <!-- Category Item -->
             </div>
         </div>
     </div>
-    <div class="main container-fluid px-4">
+    <div id="main-container" class="main container-fluid px-4">
+        <!-- <div class="emptyBox"></div> -->
         <!-- Foods Items -->
 
         <!-- Menu Item -->
