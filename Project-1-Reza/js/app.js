@@ -1,4 +1,6 @@
 // Variables
+const $ = selector => document.querySelector(selector)
+$('.main') && console.log('ok')
 
 const mainContainer = document.querySelector(".main");
 const categoryContainer = document.querySelector(".category");
@@ -7,8 +9,10 @@ const categoryElem = document.querySelector('.category')
 let headerHeight = document.querySelector('.header').offsetHeight;
 console.log(headerHeight);
 categoryElem.addEventListener('click', e => {
-    console.log(e.target);
-    e.target
+    e.target.closest('a') ? window.scrollTo({
+        top: this.offsetHeight - headerHeight,
+        behavior: "smooth"
+    }) : null
 })
 
 
