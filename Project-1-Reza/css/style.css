@@ -114,15 +114,13 @@ a {
 }
 
 ul > li {
-  border-bottom: 3px dashed var(--om-secondary-subtle3) ;
+  border-bottom: 3px dashed var(--om-secondary-subtle3);
 }
 ul > li:last-child {
   border-bottom: none !important ;
 }
 
-
-.header{
+.header {
   position: sticky;
   top: 0;
-
 }
