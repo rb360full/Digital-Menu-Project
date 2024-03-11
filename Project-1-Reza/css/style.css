@@ -63,8 +63,12 @@
   font-family: iranSans;
 }
 
+body{
+  padding-top: 0;
+}
+
 .header{
-  /* height : 500px; */
+  height : 500px;
 }
 
 
@@ -109,9 +113,9 @@ a {
 .category {
   height: 200px;
   overflow-x: scroll;
-  scrollbar-width: none;
+  /* scrollbar-width: none;
   -webkit-scrollbar: none;
-  -ms-overflow-style: none;
+  -ms-overflow-style: none; */
 }
 
 .border-dotted {
@@ -130,3 +134,11 @@ ul > li:last-child {
   position: sticky;
   top: 0px;
 } */
+
+
+
+.black{
+  /* background-color: black !important; */
+  scale: 1.2;
+ 
+}

@@ -1,0 +1,67 @@
+body {
+  margin-top: 5em;
+}
+
+div {
+  display: flex;
+  width: 100%;
+  height: 35vh;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+  flex-direction: column;
+  color: white;
+  font-size: 2em;
+}
+
+p {
+  border: 1px solid;
+  height: 200px;
+  width: 20%;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s;
+}
+
+p:nth-child(1) {
+  background-color: darkslategray;
+}
+p:nth-child(2) {
+  background-color: darkcyan;
+}
+p:nth-child(3) {
+  background-color: darkmagenta;
+}
+p:nth-child(4) {
+  background-color: rgb(156, 128, 93);
+}
+p:nth-child(5) {
+  background-color: rgb(104, 15, 116);
+}
+p:nth-child(6) {
+  background-color: rgb(137, 192, 49);
+}
+p:nth-child(7) {
+  background-color: rgb(54, 48, 132);
+}
+p:nth-child(8) {
+  background-color: rgb(225, 49, 43);
+}
+p:nth-child(9) {
+  background-color: rgb(6, 42, 4);
+}
+p:nth-child(10) {
+  background-color: rgb(37, 4, 2);
+}
+
+
+
+.black{
+    /* background-color: black !important; */
+    scale: 1.2;
+   
+}
+
+

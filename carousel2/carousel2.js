@@ -1,17 +1,23 @@
-var $owl = $('.owl-carousel');
+// Get the owl carousel element
+var owl = document.querySelector('.owl-carousel');
 
-$owl.children().each( function( index ) {
-  $(this).attr( 'data-position', index ); // NB: .attr() instead of .data()
+// Add data-position attribute to each child element
+Array.from(owl.children).forEach(function (element, index) {
+  element.setAttribute('data-position', index);
 });
 
-$owl.owlCarousel({
+// Initialize the owl carousel
+var owlCarousel = $('.owl-carousel').owlCarousel({
   center: true,
   loop: true,
   items: 5,
 });
 
-$(document).on('click', '.owl-item>div', function() {
-  // see https://owlcarousel2.github.io/OwlCarousel2/docs/api-events.html#to-owl-carousel
-  var $speed = 300;  // in ms
-  $owl.trigger('to.owl.carousel', [$(this).data( 'position' ), $speed] );
+// Add click event listener to owl items
+document.addEventListener('click', function (event) {
+  if (event.target.closest('.owl-item>div')) {
+    var position = event.target.closest('.owl-item>div').getAttribute('data-position');
+    var speed = 300;
+    owlCarousel.trigger('to.owl.carousel', [parseInt(position), speed]);
+  }
 });
