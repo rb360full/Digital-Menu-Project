@@ -76,6 +76,7 @@ body{
 .cat-item {
   width: 150px;
   height: 150px;
+  transition: all 0.4s;
 }
 
 .category-title > div {
