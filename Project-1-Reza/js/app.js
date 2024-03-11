@@ -107,7 +107,7 @@ const foods = [
 
 function generateCatogoryItems() {
     category.forEach((catItem) => {
-        categoryContainer.insertAdjacentHTML("beforeend", `
+        categoryContainer.insertAdjacentHTML("afterbegin", `
         <div class="cat-item bg-primary-subtle2 rounded rounded-4 ms-4 pt-2">
             <a href="#cat-${catItem.id}" class="d-flex flex-column justify-content-center align-items-center">
                 <img class="w-60" src="images/icons/${catItem.imgName}" alt="" />
