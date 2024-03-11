@@ -68,7 +68,7 @@ body{
 }
 
 .header{
-  height : 500px;
+  /* height : 500px; */
 }
 
 
@@ -113,9 +113,9 @@ a {
 .category {
   height: 200px;
   overflow-x: scroll;
-  /* scrollbar-width: none;
+  scrollbar-width: none;
   -webkit-scrollbar: none;
-  -ms-overflow-style: none; */
+  -ms-overflow-style: none;
 }
 
 .border-dotted {
@@ -140,5 +140,7 @@ ul > li:last-child {
 .black{
   /* background-color: black !important; */
   scale: 1.2;
- 
+  transition: all 0.7s;
+  
 }
+
