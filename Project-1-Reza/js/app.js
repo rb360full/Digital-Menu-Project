@@ -13,7 +13,7 @@ categoryElem.addEventListener('click', e => {
     }) : null
 })
 
-window.onload = function(){
+window.onload = function () {
     categoryContainer.scrollLeft = categoryElem.scrollWidth - categoryElem.clientWidth
 }
 
@@ -224,38 +224,38 @@ const catItems = document.querySelectorAll('.cat-item');
 
 catItems.forEach((cat, index) => {
     cat.addEventListener('click', e => {
-        
+
         e.preventDefault();
         const catLink = e.target.closest('.category a')
-        const catHref =  catLink.getAttribute('href').split('#')[1];
+        const catHref = catLink.getAttribute('href').split('#')[1];
         const section = document.getElementById(catHref);
         console.log(section);
         section && section.scrollIntoView({ behavior: 'smooth' });
-        
+
         // Remove 'black' class from all cat elements
         catItems.forEach(d => d.classList.remove('black'));
         // Add 'black' class to the clicked cat element
         cat.classList.add('black');
-        
+
         const rect = cat.getBoundingClientRect();
-        
+
         // Get the width of the div element
-        const divWidth = categoty.clientWidth;
-        const pWidth = rect.width;
+        const categoryWidth = categoty.clientWidth;
+        const catItemWidth = rect.width;
         const scrollableWidth = categoty.scrollWidth;
-        
+
         // Calculate the scroll position to center the clicked cat element
-        const scrollX = rect.left + categoty.scrollLeft - (divWidth / 2) + (pWidth / 2);
-        
+        const scrollX = rect.left + categoty.scrollLeft - (categoryWidth / 2) + (catItemWidth / 2);
+
         // Ensure the scroll position is within the bounds of the scrollable area
-        const maxScrollX = scrollableWidth - divWidth;
+        const maxScrollX = scrollableWidth - categoryWidth;
         const finalScrollX = Math.max(0, Math.min(maxScrollX, scrollX));
-        
+
         // Scroll the div element horizontally to position the clicked cat element in the middle
-        
-        
-        
-        
+
+
+
+
         categoty.scrollTo({
             left: finalScrollX,
             behavior: 'smooth'
@@ -264,33 +264,3 @@ catItems.forEach((cat, index) => {
 });
 
 
-
-// const categoty = document.querySelector('.category');
-// const catItems = document.querySelectorAll('.cat-item');
-
-// catItems.forEach((p, index) => {
-//     p.addEventListener('click', e => {
-//         // Remove 'black' class from all p elements
-//         catItems.forEach(d => d.classList.remove('black'));
-//         // Add 'black' class to the clicked p element
-//         p.classList.add('black');
-        
-//         const rect = p.getBoundingClientRect();
-        
-//         // Get the width of the div element
-//         const divWidth = categoty.clientWidth;
-//         const pWidth = rect.width;
-        
-//         // Calculate the scroll position to center the clicked p element for right-to-left direction
-//         const scrollX = categoty.scrollWidth - (rect.right + categoty.scrollLeft) - (divWidth / 2) + (pWidth / 2);
-        
-//         // Ensure the scroll position is within the bounds of the scrollable area
-//         const finalScrollX = Math.max(0, Math.min(categoty.scrollWidth - divWidth, scrollX));
-        
-//         // Scroll the div element horizontally to position the clicked p element in the middle
-//         categoty.scrollTo({
-//             left: finalScrollX,
-//             behavior: 'smooth'
-//         });
-//     });
-// });
