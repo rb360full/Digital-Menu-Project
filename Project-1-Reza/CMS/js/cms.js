@@ -1,23 +1,17 @@
-// variables 
+// variables
 
-const categoryElement = document.getElementById('category-selection')
+const categoryElement = document.getElementById("category-selection");
+const mainContainer = document.getElementById("main-container");
+const formSubmit = document.querySelector("form");
+const categorySelection = document.getElementById("category-selection");
+const foodName = document.getElementById("food-name");
+const optionallity = document.getElementById("optionallity");
+const foodOption = document.getElementById("food-option");
+const foodPrice = document.getElementById("food-price");
+const foodDesc = document.getElementById("food-desc");
+const foodPhoto = document.getElementById("food-photo");
 
-const mainContainer = document.getElementById('main-container')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// let foodPhotoName ;
 
 // DataBase
 const category = [
@@ -96,28 +90,50 @@ const foods = [
     },
 ];
 
+let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
 
+let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
+let foodIds = [];
 
-
+const foodOptionType = [
+    { type: "طعم", options: ["نیویورکی", "فندق", "کارامل", "نوتلا"] },
+    { type: "نوع مرغ", options: ["سینه", "ران"] },
+    { type: "نوع پخت مرغ", options: ["مرغ گریل", "مرغ سوخاری"] },
+    { type: "ادویه مخصوص", options: ["مالایی", "هندی (تند)", "ایرانی"] },
+    { type: "نوع پروتئین", options: ["گوشت", "مرغ"] },
+    { type: "طعم بستنی", options: ["شاتوت", "بلوبری", "تمشک"] },
+    { type: "کاپ", options: ["سینگل", "دبل"] },
+];
 
 // functions
 
-
-
-
 function generateCategoryItems() {
-    category.forEach(cat => {
-        let catElem = `<option value="${cat.id} - ${cat.title}">${cat.id} - ${cat.title}</option>`
-        categoryElement.insertAdjacentHTML('beforeend', catElem)
-    })
+    category.forEach((item) => {
+        let itemElem = `<option value="${item.id} - ${item.title}">${item.id} - ${item.title}</option>`;
+        categoryElement.insertAdjacentHTML("beforeend", itemElem);
+    });
+}
+function generateFoodOptionallity() {
+    foodOptionType.forEach((item) => {
+        let itemElem = `<option value="${item.type}">${item.type}</option>`;
+        optionallity.insertAdjacentHTML("beforeend", itemElem);
+    });
+}
+function generateFoodOptions(optionType) {
+    foodOption.innerHTML = `<option selected value="">Select one</option>`;
+    optionType.forEach((item) => {
+        let itemElem = `<option value="${item}">${item}</option>`;
+        foodOption.insertAdjacentHTML("beforeend", itemElem);
+    });
 }
 
-
 const generateMenuItems = (...categoryArray) => {
-
-    categoryArray.forEach(cat => {
-        foods.some(item => item.categoryId == cat.id) ?
-            mainContainer.insertAdjacentHTML("beforeend", `
+    mainContainer.innerHTML = "";
+    categoryArray.forEach((cat) => {
+        foodsArray.some((item) => item.categoryId == cat.id)
+            ? mainContainer.insertAdjacentHTML(
+                "beforeend",
+                `
     <!-- Title -->
     <p id="cat-${cat.id}" class="pt-1" ></p>    
     <div  class="category-title d-flex flex-column justify-content-center align-items-center position-relative mt-5 mb-5 ">
@@ -125,14 +141,17 @@ const generateMenuItems = (...categoryArray) => {
     </div>
     <!-- Title -->
     `
-            ) : null;
+            )
+            : null;
 
-        const catFoods = foods.filter((item) => item.categoryId === cat.id);
+        const catFoods = foodsArray.filter((item) => item.categoryId === cat.id);
 
         catFoods.forEach((item) => {
             if (item.isOptional) {
                 const minPrice = Math.min(...item.price);
-                mainContainer.insertAdjacentHTML("beforeend", `
+                mainContainer.insertAdjacentHTML(
+                    "beforeend",
+                    `
         <!-- item -->
         <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
             <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
@@ -148,6 +167,9 @@ const generateMenuItems = (...categoryArray) => {
                     <b>${minPrice}</b>
                     <small>هزار تومان</small>
                 </span>
+
+                
+
             </div>
             <details class="bg-secondary-subtle py-2">
                 <summary>
@@ -164,7 +186,9 @@ const generateMenuItems = (...categoryArray) => {
 
                 let summaryUl = document.querySelector(`#food-${item.id}-option`);
                 for (let i = 0; i < item.options.length; i++) {
-                    summaryUl.insertAdjacentHTML("beforeend", `
+                    summaryUl.insertAdjacentHTML(
+                        "beforeend",
+                        `
                 <li class="d-flex  justify-content-between w-80 py-2">
                     <span class="">${item.options[i]}</span>
                     <strong class="text-primary fw-bold">${item.price[i]}<small class="fs-7">هزار تومان</small></strong>
@@ -173,7 +197,9 @@ const generateMenuItems = (...categoryArray) => {
                     );
                 }
             } else {
-                mainContainer.insertAdjacentHTML("beforeend", `
+                mainContainer.insertAdjacentHTML(
+                    "beforeend",
+                    `
         <!-- item -->
         <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
             <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
@@ -195,13 +221,82 @@ const generateMenuItems = (...categoryArray) => {
                 );
             }
         });
-    })
+    });
 };
 
-
-
+function setFoods() { }
 
 // Call Functions
 
-generateCategoryItems()
-generateMenuItems(...category)
+generateCategoryItems();
+generateFoodOptionallity();
+
+generateMenuItems(...category);
+
+optionallity.addEventListener("change", (e) => {
+    const optionallityValue = optionallity.value;
+    const opt = foodOptionType.find((item) => item.type == optionallityValue).options;
+    console.log(opt);
+    generateFoodOptions(opt);
+});
+
+// Events
+
+// foodPhoto.addEventListener('change',e=>{
+//     foodPhotoName = e.target.files[0].name;
+//     console.log(foodPhotoName);
+// })
+
+formSubmit.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const categorySelectionValue = categorySelection.value;
+    const foodNameValue = foodName.value;
+    const optionallityValue = optionallity.value;
+    const foodOptionValue = foodOption.value;
+    const foodPriceValue = foodPrice.value;
+    const foodDescValue = foodDesc.value;
+    const foodPhotoName = foodPhoto.files[0].name;
+    const catId = categorySelectionValue.split("-")[0];
+
+    let duplicateFood = foodsArray.find((food) => food.title == foodNameValue);
+    if (duplicateFood) {
+        duplicateFood = {
+            id: duplicateFood.id,
+            title: foodNameValue,
+            categoryId: Number(catId),
+            price: [foodPriceValue],
+            isOptional: optionallityValue !== "" ? true : false,
+            OptionType: optionallityValue !== "" ? optionallityValue : false,
+            options: duplicateFood.options.push(foodOptionValue),
+            imgName: foodPhotoName,
+            description: foodDescValue,
+        };
+    } else {
+        // Generate Food id
+        foodsArray.forEach((food) => {
+            foodIds.push(food.id);
+        });
+        let lastId = Math.max(...foodIds);
+
+        let foodId = !lastId ? 0 : lastId;
+        foodId++;
+
+        const foodObject = {
+            id: foodId,
+            title: foodNameValue,
+            categoryId: Number(catId),
+            price: [foodPriceValue],
+            isOptional: optionallityValue !== "" ? true : false,
+            OptionType: optionallityValue !== "" ? optionallityValue : false,
+            options: [foodOptionValue !== "" ? foodOptionValue : null],
+            imgName: foodPhotoName,
+            description: foodDescValue,
+        };
+
+        foodsArray.push(foodObject);
+    }
+
+    localStorage.setItem("foods", JSON.stringify(foodsArray));
+    generateMenuItems(...category);
+    console.log(foodsArray);
+});
