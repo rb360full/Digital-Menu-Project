@@ -1,11 +1,123 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CMS Panel</title>
+    <link rel="stylesheet" href="../css/bootstrap.rtl.css">
+    <link rel="stylesheet" href="../css/bootstrapExtra.rtl.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/cms.css">
 </head>
+
 <body>
-    
+
+    <div class="container-fluid p-5">
+        <div class="row justify-content-around">
+
+            <div class="col-7">
+                <form class="border border-2 rounded rounded-4 p-4" action="">
+                    <legend class="text-center mb-4 fw-bold rounded py-2 bg-warning text-primary">پنل مدیریت</legend>
+
+                    <!-- Category -->
+                    <div class="mb-3" id="category">
+                        <label for="" class="form-label fs-5 fw-semibold">دسته بندی</label>
+                        <select class="form-select form-select-lg" name="" id="category-selection">
+                            <option selected>Select one</option>
+                        </select>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="" class="form-label fs-5 fw-semibold">نام آیتم</label>
+                        <input type="text" name="" id="" class="form-control py-2" placeholder="نام غذا ، سالاد ، قهوه و ..." />
+                    </div>
+
+
+
+                    <!-- Options -->
+                    <div class="mb-3">
+                        <label for="" class="form-label fs-5 fw-semibold">قابلیت انتخاب برای مشتری</label>
+                        <select class="form-select form-select-lg" name="" id="">
+                            <option selected>ندارد</option>
+                            <option>طعم</option>
+                            <option>نوع مرغ</option>
+                            <option>نوع پخت مرغ</option>
+                            <option>ادویه مخصوص</option>
+                            <option>نوع پروتئین</option>
+                            <option>کاپ</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Option Items -->
+                    <div class="mb-3">
+                        <label for="" class="form-label">انتخاب مشتری</label>
+                        <select multiple1 class="form-select form-select-lg" name="" id="">
+                            <option selected>ندارد</option>
+                            <option value="">سینه</option>
+                            <option value="">ران</option>
+                            <option value="">گوشت</option>
+                            <option value="">مرغ</option>
+                            <option value="">مرغ پخته</option>
+                            <option value="">مرغ سوخاری</option>
+                            <option value="">مالایی</option>
+                            <option value="">هندی (تند)</option>
+                            <option value="">ایرانی</option>
+                            <option value="">نوتلا</option>
+                            <option value="">نیویورکی</option>
+                            <option value="">فندق</option>
+                            <option value="">کارامل</option>
+                            <option value="">سینگل</option>
+                            <option value="">دبل</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Price -->
+                    <div class="mb-3">
+                        <label for="" class="form-label fs-5 fw-semibold">قیمت</label>
+                        <input type="number" name="" id="" class="form-control py-2" placeholder="تومان" />
+                    </div>
+
+                    <!-- Photo -->
+
+                    <div class="mb-3">
+                        <label for="" class="form-label fs-5 fw-semibold">آپلود عکس</label>
+                        <input type="file" class="form-control" name="" id="" placeholder="" />
+                    </div>
+
+                    <!-- Description -->
+
+                    <div class="mb-3">
+                        <label for="" class="form-label fs-5 fw-semibold">توضیحات</label>
+                        <textarea class="form-control" name="" id="" rows="4"></textarea>
+                    </div>
+
+                    <!-- Submit -->
+                    <button type="submit" class="btn btn-primary col-12 py-2 fs-5">تائید</button>
+
+
+
+
+                </form>
+            </div>
+
+            <div class="col-5" id="main-container">
+                <h2 class="text-center fw-bolder">لیست کامل محصولات</h2>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <script src="js/cms.js"></script>
 </body>
+
 </html>
