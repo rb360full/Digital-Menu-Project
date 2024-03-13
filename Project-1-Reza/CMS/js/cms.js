@@ -292,16 +292,16 @@ async function callApiFunctions() {
     await getRequest('category').then(result => {
         category = [...result]
         generateCategoryItems();
-    }).catch(err => {callApiFunctions()})
+    }).catch(err => { callApiFunctions() })
     await getRequest('foods').then(result => {
         foods = [...result]
         generateMenuItems(category);
-    }).catch(err => {callApiFunctions()})
+    }).catch(err => { callApiFunctions() })
 
     await getRequest('foodOptionType').then(result => {
         foodOptionType = [...result]
         generateFoodOptionallity()
-    }).catch(err => {callApiFunctions()})
+    }).catch(err => { callApiFunctions() })
 
 }
 
@@ -311,24 +311,6 @@ async function callApiFunctions() {
 
 
 callApiFunctions()
-
-
-
-
-
-// getRequest('foodOptionType').then(result => {
-//     console.log(result);
-//     category = result
-
-//     console.log('options done');
-// }).then(res => {
-//     category = res
-//     generateFoodOptionallity();
-// }
-
-// )
-
-
 
 
 
@@ -359,14 +341,14 @@ formSubmit.addEventListener("submit", (e) => {
     // const foodPhotoName = foodPhoto.files[0].name;
     const catId = categorySelectionValue.split("-")[0];
 
-    let duplicateFood = foodsArray.find((food) => food.title === foodNameValue);
-    let duplicateFoodIndex = foodsArray.indexOf(duplicateFood);
-    console.log(foodsArray);
-    console.log(foodsArray[1]);
-    console.log(foodsArray[duplicateFoodIndex]);
+    let duplicateFood = foods.find((food) => food.title === foodNameValue);
+    let duplicateFoodIndex = foods.indexOf(duplicateFood);
+    // console.log(foods);
+    // console.log(foods[1]);
+    // console.log(foods[duplicateFoodIndex]);
     if (duplicateFood) {
-        foodsArray[duplicateFoodIndex] = {
-            id: foodsArray[duplicateFoodIndex].id,
+        foods[duplicateFoodIndex] = {
+            id: foods[duplicateFoodIndex].id,
             title: foodNameValue,
             categoryId: Number(catId),
             price: [...duplicateFood.price, foodPriceValue],
@@ -378,7 +360,7 @@ formSubmit.addEventListener("submit", (e) => {
         };
     } else {
         // Generate Food id
-        foodsArray.forEach((food) => {
+        foods.forEach((food) => {
             foodIds.push(food.id);
         });
         let lastId = Math.max(...foodIds);
@@ -398,12 +380,15 @@ formSubmit.addEventListener("submit", (e) => {
             description: foodDescValue,
         };
 
-        foodsArray.push(foodObject);
+        foods.push(foodObject);
     }
 
-    localStorage.setItem("foods", JSON.stringify(foodsArray));
-    generateMenuItems(...category);
-    console.log(foodsArray);
+    localStorage.setItem("foods", JSON.stringify(foods));
+
+    deleteRequest('foods')
+    postRequest(foods, 'foods')
+    callApiFunctions()
+
     clearForm()
 });
 
