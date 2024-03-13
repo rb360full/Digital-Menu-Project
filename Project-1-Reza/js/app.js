@@ -3,9 +3,9 @@
 const mainContainer = document.querySelector(".main");
 const categoryContainer = document.querySelector(".category");
 const categoryElem = document.querySelector('.category')
+const myFirebaseApi = 'https://digital-online-menu-default-rtdb.firebaseio.com/'
 
 let headerHeight = document.querySelector('.header').offsetHeight;
-console.log(headerHeight);
 categoryElem.addEventListener('click', e => {
     e.target.closest('a') ? window.scrollTo({
         top: this.offsetHeight - headerHeight,
@@ -25,18 +25,19 @@ window.onload = function () {
 // DataBase
 
 
-const category = [
-    { id: 1, title: "توضیحات | NOTE", imgName: "schedule.svg" },
-    { id: 2, title: "پرطرفدارها | POPULAR", imgName: "popular.svg" },
-    { id: 3, title: "پیش غذا | APPETIZER", imgName: "APPETIZER.svg" },
-    { id: 4, title: "سالاد | SALAD", imgName: "SALAD.svg" },
-    { id: 5, title: "غذای اصلی | MAIN COURSE", imgName: "MAIN-COURSE.svg" },
-    { id: 6, title: "پیتزا | PIZZA", imgName: "PIZZA.svg" },
-    { id: 7, title: "صبحانه‌ | BREAKFAST", imgName: "BREAKFAST.svg" },
-    { id: 8, title: "دسر | DESSERT", imgName: "DESSERT.svg" },
-    { id: 9, title: "نوشیدنی‌های سرد | COLD DRINKS", imgName: "COLD-DRINKS.svg" },
-    { id: 10, title: "قهوه | COFFEE", imgName: "COFFEE.svg" },
-];
+let category = []
+// const category = [
+//     { id: 1, title: "توضیحات | NOTE", imgName: "schedule.svg" },
+//     { id: 2, title: "پرطرفدارها | POPULAR", imgName: "popular.svg" },
+//     { id: 3, title: "پیش غذا | APPETIZER", imgName: "APPETIZER.svg" },
+//     { id: 4, title: "سالاد | SALAD", imgName: "SALAD.svg" },
+//     { id: 5, title: "غذای اصلی | MAIN COURSE", imgName: "MAIN-COURSE.svg" },
+//     { id: 6, title: "پیتزا | PIZZA", imgName: "PIZZA.svg" },
+//     { id: 7, title: "صبحانه‌ | BREAKFAST", imgName: "BREAKFAST.svg" },
+//     { id: 8, title: "دسر | DESSERT", imgName: "DESSERT.svg" },
+//     { id: 9, title: "نوشیدنی‌های سرد | COLD DRINKS", imgName: "COLD-DRINKS.svg" },
+//     { id: 10, title: "قهوه | COFFEE", imgName: "COFFEE.svg" },
+// ];
 
 
 
@@ -106,14 +107,15 @@ const category = [
 
 let foods = []
 
-let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
-let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
-foods.push(...foodsArray) 
+// let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
+// let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
+// foods.push(...foodsArray)
 
 
 // Functions
 
 function generateCatogoryItems() {
+    
     category.forEach((catItem) => {
         categoryContainer.insertAdjacentHTML("afterbegin", `
         <div class="cat-item bg-primary-subtle2 rounded rounded-4 ms-4 pt-2">
@@ -213,13 +215,68 @@ const generateMenuItems = (...categoryArray) => {
     })
 };
 
+
+
+async function callApiFunctions() {
+    await getRequest('category').then(result => {
+        // category = [...result]
+        console.log('categoty : ', result);
+        generateCategoryItems();
+    }).catch(err => {callApiFunctions()})
+    await getRequest('foods').then(result => {
+        foods = [...result]
+        console.log('foods : ', foods);
+        generateMenuItems(category);
+    }).catch(err => callApiFunctions())
+
+
+
+}
+
+
+// API Functions 
+
+async function postRequest(array, arrayStringName) {
+
+    let req = `${myFirebaseApi}${arrayStringName}.json`
+    let res = await fetch(req, {
+        method: 'POST',
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(array)
+    })
+
+    return res
+}
+
+
+async function getRequest(arrayStringName) {
+    let req = `${myFirebaseApi}${arrayStringName}.json`
+    let res = await fetch(req)
+    let resJson = await res.json()
+
+    return Object.values(resJson)[0]
+}
+
+async function deleteRequest(arrayStringName) {
+
+    let req = `${myFirebaseApi}${arrayStringName}.json`
+    let res = await fetch(req, {
+        method: 'DELETE'
+    })
+
+    return res
+}
+
+
+
 // Call Faunctions
 
-generateCatogoryItems();
+
+callApiFunctions()
+// generateCatogoryItems();
+// generateMenuItems(...category);
 
 
-
-generateMenuItems(...category);
 
 // Events
 
@@ -270,5 +327,20 @@ catItems.forEach((cat, index) => {
         });
     });
 });
+
+
+
+
+
+
+
+// console.log('Delete: ' + deleteRequest('foods'));
+// console.log('Delete: ' + deleteRequest('category'));
+
+// console.log('Post: ' + postRequest( foods , 'foods'));
+// console.log('Post: ' + postRequest( category , 'category'));
+
+//  console.log(getRequest('foods'));
+//  console.log(getRequest('category'));
 
 
