@@ -95,8 +95,8 @@ let foods = []
 //     },
 // ];
 
-// let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
-// let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
+let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
+let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
 
 let foodIds = [];
 
@@ -256,9 +256,23 @@ function clearForm() {
 
 async function deleteItem(table, id) {
 
-    alert(id);
-    // getRequest(`${table}`)
-    deleteRequest(`${table}`, id )
+    // getRequest(`${table}`).then(res=>{
+    //     foods = res.json().files(item=> item)
+    //     foods.find
+    // })
+
+    console.log(id);
+    console.log(foods);
+
+    let itemDelete =  foods.find(item=> item.id == id)
+    let arrayIndex = foods.indexOf(itemDelete)
+
+    console.log(itemDelete);
+    console.log(arrayIndex);
+
+
+    // how to find record that have this id ??
+    deleteRequest(`${table}`, arrayIndex ) 
 }
 
 
@@ -289,9 +303,9 @@ async function setRequest(array, arrayStringName, index) {
 
 async function getRequest(arrayStringName, index) {
     let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
-    // let req = `${myFirebaseApi}${arrayStringName}.json`;
     let res = await fetch(req);
     let resJson = await res.json();
+    console.log('res',res);
 
     return resJson;
     return Object.values(resJson);
@@ -347,9 +361,9 @@ optionallity.addEventListener("change", (e) => {
 
 mainContainer.addEventListener('click', e => {
 
-    const id = e.target.id.includes('delete') && e.target.id.split('-')[2]
+    const idd = e.target.id.includes('delete') && e.target.id.split('-')[2]
 
-    deleteItem('foods', id)
+    deleteItem('foods', idd)
     callApiFunctions()
 
 })
