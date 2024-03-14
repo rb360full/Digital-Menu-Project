@@ -147,7 +147,7 @@ const generateMenuItems = (cat) => {
     console.log('cat ', cat);
     cat.forEach((cat) => {
         foods.some((item) => item.categoryId == cat.id)
-            ? mainContainer.insertAdjacentHTML(
+            && mainContainer.insertAdjacentHTML(
                 "beforeend",
                 `
     <!-- Title -->
@@ -157,7 +157,7 @@ const generateMenuItems = (cat) => {
     </div>
     <!-- Title -->
     `
-            ) : null;
+            )
 
         const catFoods = foods.filter((item) => item.categoryId === cat.id);
 
@@ -182,6 +182,7 @@ const generateMenuItems = (cat) => {
                     <b>${minPrice}</b>
                     <small>هزار تومان</small>
                 </span>
+                <button class="btn btn-danger" id="delete-item-${item.id}">Delete</button>
 
                 
 
@@ -229,6 +230,7 @@ const generateMenuItems = (cat) => {
                     <b>${item.price[0]}</b>
                     <small>هزار تومان</small>
                 </span>
+                <button class="btn btn-danger" id="delete-item-${item.id}">Delete</button>
             </div>
         </div>
         <!-- item -->
@@ -242,7 +244,7 @@ const generateMenuItems = (cat) => {
 
 
 function clearForm() {
-    generateMenuItems(...category);
+    generateMenuItems(category);
     generateCategoryItems();
     generateFoodOptionallity();
     foodName.value = ''
@@ -252,54 +254,72 @@ function clearForm() {
     foodPhoto.value = ''
 }
 
+async function deleteItem(table, id) {
+
+    alert(id);
+    // getRequest(`${table}`)
+    deleteRequest(`${table}`, id )
+}
+
 
 
 // API Functions 
-
 async function postRequest(array, arrayStringName) {
-
-    let req = `${myFirebaseApi}${arrayStringName}.json`
+    let req = `${myFirebaseApi}${arrayStringName}.json`;
     let res = await fetch(req, {
-        method: 'POST',
+        method: "POST",
         headers: { "Content-type": "application/json" },
         body: JSON.stringify(array)
-    })
+    });
 
-    return res
+    return res;
 }
+async function setRequest(array, arrayStringName, index) {
 
-
-async function getRequest(arrayStringName) {
-    let req = `${myFirebaseApi}${arrayStringName}.json`
-    let res = await fetch(req)
-    let resJson = await res.json()
-
-    return Object.values(resJson)[0]
-}
-
-async function deleteRequest(arrayStringName) {
-
-    let req = `${myFirebaseApi}${arrayStringName}.json`
+    // let req = `${myFirebaseApi}${arrayStringName}.json`;
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
     let res = await fetch(req, {
-        method: 'DELETE'
-    })
+        method: "PUT",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify(array)
+    });
 
-    return res
+    return res;
 }
 
+async function getRequest(arrayStringName, index) {
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    // let req = `${myFirebaseApi}${arrayStringName}.json`;
+    let res = await fetch(req);
+    let resJson = await res.json();
+
+    return resJson;
+    return Object.values(resJson);
+}
+
+async function deleteRequest(arrayStringName, index) {
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    let res = await fetch(req, {
+        method: "DELETE",
+    });
+
+    return res;
+}
 
 async function callApiFunctions() {
     await getRequest('category').then(result => {
-        category = [...result]
+        category = result.filter(item => item)
         generateCategoryItems();
     }).catch(err => { callApiFunctions() })
     await getRequest('foods').then(result => {
-        foods = [...result]
+        foods = result.filter(item => item)
+        console.log(foods);
         generateMenuItems(category);
-    }).catch(err => { callApiFunctions() })
+    })
+        .catch(err => { callApiFunctions() })
 
     await getRequest('foodOptionType').then(result => {
-        foodOptionType = [...result]
+        foodOptionType = result.filter(item => item)
         generateFoodOptionallity()
     }).catch(err => { callApiFunctions() })
 
@@ -324,6 +344,16 @@ optionallity.addEventListener("change", (e) => {
 });
 
 // Events
+
+mainContainer.addEventListener('click', e => {
+
+    const id = e.target.id.includes('delete') && e.target.id.split('-')[2]
+
+    deleteItem('foods', id)
+    callApiFunctions()
+
+})
+
 
 foodPhoto.addEventListener('change', e => {
     foodPhotoName = e.target.files[0].name;
@@ -385,10 +415,14 @@ formSubmit.addEventListener("submit", (e) => {
 
     localStorage.setItem("foods", JSON.stringify(foods));
 
-    deleteRequest('foods')
-    postRequest(foods, 'foods')
+    setRequest(foods, 'foods')
     callApiFunctions()
 
     clearForm()
 });
 
+
+
+// setRequest(category, 'category')
+// setRequest(foodOptionType, 'foodOptionType')
+// setRequest(foods, 'foods')
