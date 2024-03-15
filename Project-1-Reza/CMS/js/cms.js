@@ -302,6 +302,67 @@ async function deleteItem(table, id) {
 }
 
 
+async function submit(e) {
+    const categorySelectionValue = categorySelection.value;
+    const foodNameValue = foodName.value;
+    const optionallityValue = optionallity.value;
+    const foodOptionValue = foodOption.value;
+    const foodPriceValue = foodPrice.value;
+    const foodDescValue = foodDesc.value;
+    // const foodPhotoName = foodPhoto.files[0].name;
+    const catId = categorySelectionValue.split("-")[0];
+
+    let duplicateFood = foods.find((food) => food.title === foodNameValue);
+    let duplicateFoodIndex = foods.indexOf(duplicateFood);
+    // console.log(foods);
+    // console.log(foods[1]);
+    // console.log(foods[duplicateFoodIndex]);
+    if (duplicateFood) {
+        foods[duplicateFoodIndex] = {
+            id: foods[duplicateFoodIndex].id,
+            title: foodNameValue,
+            categoryId: catId ? Number(catId) : duplicateFood.categoryId,
+            price: [...duplicateFood.price, foodPriceValue],
+            isOptional: optionallityValue !== "" ? true : false,
+            OptionType: optionallityValue !== "" ? optionallityValue : false,
+            options: !duplicateFood.options ? [foodOptionValue] : [...duplicateFood.options, foodOptionValue],
+            imgName: foodPhotoName,
+            description: foodDescValue,
+        };
+    } else {
+        // Generate Food id
+        foods.forEach((food) => {
+            foodIds.push(food.id);
+        });
+        let lastId = Math.max(...foodIds);
+
+        let foodId = !lastId ? 0 : lastId;
+        foodId++;
+
+        const foodObject = {
+            id: foodId,
+            title: foodNameValue,
+            categoryId: Number(catId),
+            price: [foodPriceValue],
+            isOptional: optionallityValue !== "" ? true : false,
+            OptionType: optionallityValue !== "" ? optionallityValue : false,
+            options: [foodOptionValue !== "" ? foodOptionValue : null],
+            imgName: foodPhotoName,
+            description: foodDescValue,
+        };
+
+        foods.push(foodObject);
+    }
+
+    localStorage.setItem("foods", JSON.stringify(foods));
+
+    await setRequest(foods, 'foods')
+    await callApiFunctions()
+
+    clearForm()
+}
+
+
 
 // API Functions 
 async function postRequest(array, arrayStringName) {
@@ -405,63 +466,8 @@ foodPhoto.addEventListener('change', e => {
 
 formSubmit.addEventListener("submit", (e) => {
     e.preventDefault();
-    const categorySelectionValue = categorySelection.value;
-    const foodNameValue = foodName.value;
-    const optionallityValue = optionallity.value;
-    const foodOptionValue = foodOption.value;
-    const foodPriceValue = foodPrice.value;
-    const foodDescValue = foodDesc.value;
-    // const foodPhotoName = foodPhoto.files[0].name;
-    const catId = categorySelectionValue.split("-")[0];
+    submit()
 
-    let duplicateFood = foods.find((food) => food.title === foodNameValue);
-    let duplicateFoodIndex = foods.indexOf(duplicateFood);
-    // console.log(foods);
-    // console.log(foods[1]);
-    // console.log(foods[duplicateFoodIndex]);
-    if (duplicateFood) {
-        foods[duplicateFoodIndex] = {
-            id: foods[duplicateFoodIndex].id,
-            title: foodNameValue,
-            categoryId: Number(catId),
-            price: [...duplicateFood.price, foodPriceValue],
-            isOptional: optionallityValue !== "" ? true : false,
-            OptionType: optionallityValue !== "" ? optionallityValue : false,
-            options: [...duplicateFood.options, foodOptionValue],
-            imgName: foodPhotoName,
-            description: foodDescValue,
-        };
-    } else {
-        // Generate Food id
-        foods.forEach((food) => {
-            foodIds.push(food.id);
-        });
-        let lastId = Math.max(...foodIds);
-
-        let foodId = !lastId ? 0 : lastId;
-        foodId++;
-
-        const foodObject = {
-            id: foodId,
-            title: foodNameValue,
-            categoryId: Number(catId),
-            price: [foodPriceValue],
-            isOptional: optionallityValue !== "" ? true : false,
-            OptionType: optionallityValue !== "" ? optionallityValue : false,
-            options: [foodOptionValue !== "" ? foodOptionValue : null],
-            imgName: foodPhotoName,
-            description: foodDescValue,
-        };
-
-        foods.push(foodObject);
-    }
-
-    localStorage.setItem("foods", JSON.stringify(foods));
-
-    setRequest(foods, 'foods')
-    callApiFunctions()
-
-    clearForm()
 });
 
 
