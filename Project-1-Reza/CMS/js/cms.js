@@ -2,6 +2,7 @@
 
 let foodPhotoName;
 const myFirebaseApi = 'https://digital-online-menu-default-rtdb.firebaseio.com/'
+const uid = '076cdb8b-2f9a-4bc1-a0af-d606e3086180'
 const categoryElement = document.getElementById("category-selection");
 const mainContainer = document.getElementById("main-container");
 const formSubmit = document.querySelector("form");
@@ -32,8 +33,20 @@ let category = []
 
 
 let foods = []
-// let foods = [
+// foods = [
 //     {
+//         id: 0,
+//         title: "deleted",
+//         categoryId: 0,
+//         price: [0],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "",
+//         description: ""
+//     },
+//     {
+
 //         id: 1,
 //         title: "هالومی 🌶| Halloumi",
 //         categoryId: 4,
@@ -94,6 +107,7 @@ let foods = []
 //             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
 //     },
 // ];
+
 
 let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
 let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
@@ -264,15 +278,27 @@ async function deleteItem(table, id) {
     console.log(id);
     console.log(foods);
 
-    let itemDelete =  foods.find(item=> item.id == id)
+    let itemDelete = foods.find(item => item.id == id)
     let arrayIndex = foods.indexOf(itemDelete)
 
     console.log(itemDelete);
     console.log(arrayIndex);
 
 
-    // how to find record that have this id ??
-    deleteRequest(`${table}`, arrayIndex ) 
+    let deletedFood = {
+        id: 0,
+        title: "deleted",
+        categoryId: 0,
+        price: [0],
+        isOptional: false,
+        OptionType: "",
+        options: [],
+        imgName: "",
+        description: ""
+    }
+    // deleteRequest(`${table}`, arrayIndex)
+    await setRequest(deletedFood, `${table}`, arrayIndex)
+    await callApiFunctions()
 }
 
 
@@ -292,6 +318,7 @@ async function setRequest(array, arrayStringName, index) {
 
     // let req = `${myFirebaseApi}${arrayStringName}.json`;
     let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    // let req = index ? `${myFirebaseApi}.auth.${uid}/${arrayStringName}/${index}.json` : `${myFirebaseApi}.auth.${uid}/${arrayStringName}.json`
     let res = await fetch(req, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
@@ -305,7 +332,7 @@ async function getRequest(arrayStringName, index) {
     let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
     let res = await fetch(req);
     let resJson = await res.json();
-    console.log('res',res);
+    // console.log('res', res);
 
     return resJson;
     return Object.values(resJson);
@@ -324,18 +351,21 @@ async function callApiFunctions() {
     await getRequest('category').then(result => {
         category = result.filter(item => item)
         generateCategoryItems();
-    }).catch(err => { callApiFunctions() })
+    })
+        .catch(err => { callApiFunctions() })
     await getRequest('foods').then(result => {
-        foods = result.filter(item => item)
+        foods = result
         console.log(foods);
         generateMenuItems(category);
     })
         .catch(err => { callApiFunctions() })
 
     await getRequest('foodOptionType').then(result => {
+        console.log(result);
         foodOptionType = result.filter(item => item)
         generateFoodOptionallity()
-    }).catch(err => { callApiFunctions() })
+    })
+        .catch(err => { callApiFunctions() })
 
 }
 
@@ -362,9 +392,8 @@ optionallity.addEventListener("change", (e) => {
 mainContainer.addEventListener('click', e => {
 
     const idd = e.target.id.includes('delete') && e.target.id.split('-')[2]
+    idd && deleteItem('foods', idd)
 
-    deleteItem('foods', idd)
-    callApiFunctions()
 
 })
 
@@ -437,6 +466,84 @@ formSubmit.addEventListener("submit", (e) => {
 
 
 
+// foods = [
+//     {
+//         id: 0,
+//         title: "deleted",
+//         categoryId: 0,
+//         price: [0],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "",
+//         description: ""
+//     },
+//     {
+
+//         id: 1,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127, 120],
+//         isOptional: true,
+//         OptionType: "نوع پخت مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 2,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127, 120, 110],
+//         isOptional: true,
+//         OptionType: "نوع شومفخ مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 3,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127],
+//         isOptional: false,
+//         OptionType: "نوع پخت مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 4,
+//         title: "آووکادو تست🥑 | Avocado Toast",
+//         categoryId: 7,
+//         price: [187],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "avocado-toast-normal.jpg",
+//         description:
+//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
+//     },
+//     {
+//         id: 5,
+//         title: "آووکادو تست🥑 | Avocado Toast",
+//         categoryId: 7,
+//         price: [187],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "avocado-toast-normal.jpg",
+//         description:
+//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
+//     },
+// ];
+
+
+// setRequest(foods, 'foods')
+
+
 // setRequest(category, 'category')
 // setRequest(foodOptionType, 'foodOptionType')
-// setRequest(foods, 'foods')
