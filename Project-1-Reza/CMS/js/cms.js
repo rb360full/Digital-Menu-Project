@@ -1,6 +1,7 @@
 // variables
 
 let foodPhotoName;
+let foodIdEdit = document.getElementById('food-id-edit');
 const myFirebaseApi = "https://digital-online-menu-default-rtdb.firebaseio.com/";
 const uid = "076cdb8b-2f9a-4bc1-a0af-d606e3086180";
 const categoryElement = document.getElementById("category-selection");
@@ -12,7 +13,7 @@ const optionallity = document.getElementById("optionallity");
 const foodOption = document.getElementById("food-option");
 const foodPrice = document.getElementById("food-price");
 const foodDesc = document.getElementById("food-desc");
-const foodPhoto = document.getElementById("food-photo");
+let foodPhoto = document.getElementById("food-photo");
 
 // DataBase
 
@@ -254,9 +255,7 @@ const generateMenuItems = (cat) => {
 };
 
 
-
-mainContainer.addEventListener("click", (e) => {
-
+async function editItem2(e) {
     let menuItem = e.target.closest(".menu-item");
     let foodId = menuItem.id.split("-")[1];
     let food = foods.find((item) => item.id == foodId);
@@ -264,11 +263,13 @@ mainContainer.addEventListener("click", (e) => {
     let changeFoodPhoto = document.getElementById('change-food-photo');
     let photo;
     e.target.className.includes('food-photo-container') && changeFoodPhoto.click();
+    let arrayIndex;
+    let editFood;
     changeFoodPhoto.addEventListener('change', (e) => {
         e ? photo = e.target.files[0].name : null
         image.src = `../images/${photo}`
-        let arrayIndex = foods.indexOf(food);
-        let editFood = {
+        arrayIndex = foods.indexOf(food);
+        editFood = {
             id: foodId,
             title: food.title,
             categoryId: food.categoryId,
@@ -279,8 +280,13 @@ mainContainer.addEventListener("click", (e) => {
             imgName: photo,
             description: food.description,
         };
-        setRequest(editFood, "foods", arrayIndex)
+        setRequest(editFood, "foods", arrayIndex);
     })
+}
+
+
+mainContainer.addEventListener("click", (e) => {
+    editItem2(e)
 })
 
 
@@ -307,6 +313,7 @@ function clearForm() {
     foodPrice.value = "";
     foodDesc.value = "";
     foodPhoto.value = "";
+    foodIdEdit.value = "";
 }
 
 async function deleteItem(table, id) {
@@ -334,44 +341,30 @@ async function deleteItem(table, id) {
     await callApiFunctions();
 }
 async function editItem(table, id) {
-    console.log(id);
-    console.log(foods);
+    foodIdEdit.value = id
+    let food = foods.find((item) => item.id == id);
+    let catFinded = category.find((item) => item.id == food.categoryId);
+    // let arrayIndex = foods.indexOf(food);
+    foodName.value = food.title;
+    optionallity.value = food.OptionType;
+    // foodOption.value = food.options[0];
 
-    let itemEdit = foods.find((item) => item.id == id);
-    let catFinded = category.find((item) => item.id == itemEdit.categoryId);
-    console.log("cat finded", catFinded);
-    let arrayIndex = foods.indexOf(itemEdit);
+    const optionallityValue = optionallity.value;
+    const opt = optionallityValue && foodOptionType.find((item) => item.type == optionallityValue).options;
+    opt && generateFoodOptions(opt);
 
-    console.log(itemEdit);
-    console.log(arrayIndex);
 
-    let categorySelectionValue = categorySelection.value;
-
-    foodName.value = itemEdit.title;
-    foodPrice.value = itemEdit.price[0];
-    optionallity.value = itemEdit.OptionType;
-    // foodOption.value =
-    // foodPhoto.files[0].name = itemEdit.imgName
-    console.log("foodPhoto", foodPhoto.src);
-    foodDesc.value = itemEdit.description;
-    const catId = categorySelectionValue.split("-")[0];
+    // let photo = document.getElementById("food-photo")
+    foodDesc.value = food.description;
     categorySelection.value = `${catFinded.id} - ${catFinded.title}`;
+    // const catId = categorySelection.value.split("-")[0];
+    foodPrice.value = food.price[0];
 
-    let editFood = {
-        id: itemEdit.id,
-        title: foodName.value,
-        categoryId: catId ? Number(catId) : itemEdit.categoryId,
-        price: !itemEdit.price ? [foodPrice.value] : [...itemEdit.price, foodPrice.value],
-        isOptional: optionallity.value !== "" ? true : false,
-        OptionType: optionallity.value !== "" ? optionallity.value : false,
-        options: !itemEdit.options ? [foodOption.value] : [...itemEdit.options, foodOption.value],
-        imgName: itemEdit.imgName ? itemEdit.imgName : foodPhoto.value,
-        description: foodDesc.value,
-    };
-    await setRequest(editFood, `${table}`, arrayIndex);
+
 }
 
 async function submit(e) {
+
     const categorySelectionValue = categorySelection.value;
     const foodNameValue = foodName.value;
     const optionallityValue = optionallity.value;
@@ -380,23 +373,41 @@ async function submit(e) {
     const foodDescValue = foodDesc.value;
     const catId = categorySelectionValue.split("-")[0];
 
-    let duplicateFood = foods.find((food) => food.title === foodNameValue);
+    let duplicateFood = foods.find((food) => food.id == foodIdEdit.value);
     let duplicateFoodIndex = foods.indexOf(duplicateFood);
     // console.log(foods);
     // console.log(foods[1]);
     // console.log(foods[duplicateFoodIndex]);
+
+
+
+
+
+
+
     if (duplicateFood) {
+
+        duplicateFood.options.forEach(option => {
+
+            console.log(duplicateFood.options.indexOf(option));
+            foodOption.value == option ? duplicateFood.price[duplicateFood.options.indexOf(option)] = Number(foodPrice.value) : null
+        })
+
+
         foods[duplicateFoodIndex] = {
             id: foods[duplicateFoodIndex].id,
             title: foodNameValue,
             categoryId: catId ? Number(catId) : duplicateFood.categoryId,
-            price: [...duplicateFood.price, foodPriceValue],
+            price: duplicateFood.price,
             isOptional: optionallityValue !== "" ? true : false,
             OptionType: optionallityValue !== "" ? optionallityValue : false,
             options: !duplicateFood.options ? [foodOptionValue] : [...duplicateFood.options, foodOptionValue],
-            imgName: foodPhotoName,
+            imgName: foodPhotoName || duplicateFood.imgName,
             description: foodDescValue,
         };
+        // localStorage.setItem("foods", JSON.stringify(foods));
+        console.log(duplicateFood);
+        
     } else {
         // Generate Food id
         foods.forEach((food) => {
@@ -420,10 +431,11 @@ async function submit(e) {
         };
 
         foods.push(foodObject);
+        
     }
-
-    localStorage.setItem("foods", JSON.stringify(foods));
-
+    
+    
+    
     await setRequest(foods, "foods");
     await callApiFunctions();
 
@@ -507,14 +519,24 @@ async function callApiFunctions() {
 
 callApiFunctions();
 
+
+// Events
 optionallity.addEventListener("change", (e) => {
     const optionallityValue = optionallity.value;
     const opt = foodOptionType.find((item) => item.type == optionallityValue).options;
-    console.log(opt);
     generateFoodOptions(opt);
+
 });
 
-// Events
+foodOption.addEventListener('change', e => {
+    let food = foodIdEdit && foods.find(item => item.id == foodIdEdit.value)
+    food.options.forEach(option => {
+
+        console.log(food.options.indexOf(option));
+        foodOption.value == option ? foodPrice.value = food.price[food.options.indexOf(option)] : null
+    })
+
+})
 
 mainContainer.addEventListener("click", (e) => {
     const idd = e.target.id.includes("delete") && e.target.id.split("-")[2];
@@ -569,7 +591,7 @@ formSubmit.addEventListener("submit", (e) => {
 //         categoryId: 4,
 //         price: [127, 120, 110],
 //         isOptional: true,
-//         OptionType: "نوع شومفخ مرغ",
+//         OptionType: "نوع پخت مرغ",
 //         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
 //         imgName: "Halloumi.jpg",
 //         description:
