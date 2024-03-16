@@ -172,10 +172,11 @@ const generateMenuItems = (cat) => {
                     "beforeend",
                     `
         <!-- item -->
-        <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
-            <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
-                <div class="ps-2 pb-2">
-                    <img class="img-fluid  rounded rounded-2" src="../images/${item.imgName}" alt="image" />
+        <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden" id="food-${item.id}">
+            <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center food-photo-container" >
+                <div class="ps-2 pb-2 food-photo-container" >
+                     <img class="img-fluid food-photo-container  rounded rounded-2" src="../images/${item.imgName}" alt="image"/>
+                    <input type="file" class="form-control" name="" id="change-food-photo" style="display: none;" />
                 </div>
             </div>
             <div class="menu-item-text col-8 col-sm-9 d-flex flex-column p-0 ">
@@ -225,10 +226,10 @@ const generateMenuItems = (cat) => {
                     "beforeend",
                     `
         <!-- item -->
-        <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden">
-            <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center">
-                <div class="ps-2 pb-2">
-                    <img class="img-fluid  rounded rounded-2" src="../images/${item.imgName}" alt="" />
+        <div class="menu-item row bg-secondary-subtle2 text-white  my-4  pt-2 px-0 rounded rounded-4 overflow-hidden" id="food-${item.id}">
+            <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center food-photo-container" >
+                <div class="ps-2 pb-2 food-photo-container">
+                    <img class="img-fluid  rounded rounded-2 food-photo-container" src="../images/${item.imgName}" alt="image"/>
                 </div>
             </div>
             <div class="menu-item-text col-8 col-sm-9 d-flex flex-column p-0 ">
@@ -251,6 +252,51 @@ const generateMenuItems = (cat) => {
         });
     });
 };
+
+
+
+mainContainer.addEventListener("click", (e) => {
+
+    let menuItem = e.target.closest(".menu-item");
+    let foodId = menuItem.id.split("-")[1];
+    let food = foods.find((item) => item.id == foodId);
+    let image = e.target.closest(".menu-item").children[0].children[0].querySelector("img");
+    let changeFoodPhoto = document.getElementById('change-food-photo');
+    let photo;
+    e.target.className.includes('food-photo-container') && changeFoodPhoto.click();
+    changeFoodPhoto.addEventListener('change', (e) => {
+        e ? photo = e.target.files[0].name : null
+        image.src = `../images/${photo}`
+        let arrayIndex = foods.indexOf(food);
+        let editFood = {
+            id: foodId,
+            title: food.title,
+            categoryId: food.categoryId,
+            price: food.price,
+            isOptional: food.isOptional,
+            OptionType: food.OptionType,
+            options: food.options,
+            imgName: photo,
+            description: food.description,
+        };
+        setRequest(editFood, "foods", arrayIndex)
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function clearForm() {
     generateMenuItems(category);
@@ -284,7 +330,6 @@ async function deleteItem(table, id) {
         imgName: "",
         description: "",
     };
-    // deleteRequest(`${table}`, arrayIndex)
     await setRequest(deletedFood, `${table}`, arrayIndex);
     await callApiFunctions();
 }
@@ -489,3 +534,84 @@ formSubmit.addEventListener("submit", (e) => {
     e.preventDefault();
     submit();
 });
+
+
+
+
+// foods = [
+//     {
+//         id: 0,
+//         title: "deleted",
+//         categoryId: 0,
+//         price: [0],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "",
+//         description: ""
+//     },
+//     {
+
+//         id: 1,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127, 120],
+//         isOptional: true,
+//         OptionType: "نوع پخت مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 2,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127, 120, 110],
+//         isOptional: true,
+//         OptionType: "نوع شومفخ مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 3,
+//         title: "هالومی 🌶| Halloumi",
+//         categoryId: 4,
+//         price: [127],
+//         isOptional: false,
+//         OptionType: "نوع پخت مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری"],
+//         imgName: "Halloumi.jpg",
+//         description:
+//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
+//     },
+//     {
+//         id: 4,
+//         title: "آووکادو تست🥑 | Avocado Toast",
+//         categoryId: 7,
+//         price: [187],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "avocado-toast-normal.jpg",
+//         description:
+//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
+//     },
+//     {
+//         id: 5,
+//         title: "آووکادو تست🥑 | Avocado Toast",
+//         categoryId: 7,
+//         price: [187],
+//         isOptional: false,
+//         OptionType: "",
+//         options: [],
+//         imgName: "avocado-toast-normal.jpg",
+//         description:
+//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
+//     },
+// ];
+
+// setRequest(foods, "foods")
+
