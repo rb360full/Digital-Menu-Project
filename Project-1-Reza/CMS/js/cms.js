@@ -1,8 +1,8 @@
 // variables
 
 let foodPhotoName;
-const myFirebaseApi = 'https://digital-online-menu-default-rtdb.firebaseio.com/'
-const uid = '076cdb8b-2f9a-4bc1-a0af-d606e3086180'
+const myFirebaseApi = "https://digital-online-menu-default-rtdb.firebaseio.com/";
+const uid = "076cdb8b-2f9a-4bc1-a0af-d606e3086180";
 const categoryElement = document.getElementById("category-selection");
 const mainContainer = document.getElementById("main-container");
 const formSubmit = document.querySelector("form");
@@ -14,11 +14,10 @@ const foodPrice = document.getElementById("food-price");
 const foodDesc = document.getElementById("food-desc");
 const foodPhoto = document.getElementById("food-photo");
 
-
 // DataBase
 
-let category = []
-// const category = [
+let category = [];
+//  category = [
 //     { id: 1, title: "توضیحات | NOTE", imgName: "schedule.svg" },
 //     { id: 2, title: "پرطرفدارها | POPULAR", imgName: "popular.svg" },
 //     { id: 3, title: "پیش غذا | APPETIZER", imgName: "APPETIZER.svg" },
@@ -31,8 +30,7 @@ let category = []
 //     { id: 10, title: "قهوه | COFFEE", imgName: "COFFEE.svg" },
 // ];
 
-
-let foods = []
+let foods = [];
 // foods = [
 //     {
 //         id: 0,
@@ -108,14 +106,13 @@ let foods = []
 //     },
 // ];
 
-
 let foodsInStorage = JSON.parse(localStorage.getItem("foods"));
 let foodsArray = !foodsInStorage ? [...foods] : foodsInStorage;
 
 let foodIds = [];
 
-let foodOptionType = []
-// const foodOptionType = [
+let foodOptionType = [];
+//  foodOptionType = [
 //     { type: "طعم", options: ["نیویورکی", "فندق", "کارامل", "نوتلا"] },
 //     { type: "نوع مرغ", options: ["سینه", "ران"] },
 //     { type: "نوع پخت مرغ", options: ["مرغ گریل", "مرغ سوخاری"] },
@@ -125,24 +122,17 @@ let foodOptionType = []
 //     { type: "کاپ", options: ["سینگل", "دبل"] },
 // ];
 
-
-
-
-
-
-
-
 // functions
 
 function generateCategoryItems() {
-    categoryElement.innerHTML = `<option selected value="">Select one</option>`
+    categoryElement.innerHTML = `<option selected value="">Select one</option>`;
     category.forEach((item) => {
         let itemElem = `<option value="${item.id} - ${item.title}">${item.id} - ${item.title}</option>`;
         categoryElement.insertAdjacentHTML("beforeend", itemElem);
     });
 }
 async function generateFoodOptionallity() {
-    optionallity.innerHTML = `<option selected value="">Select one</option>`
+    optionallity.innerHTML = `<option selected value="">Select one</option>`;
     foodOptionType.forEach((item) => {
         let itemElem = `<option value="${item.type}">${item.type}</option>`;
         optionallity.insertAdjacentHTML("beforeend", itemElem);
@@ -158,10 +148,10 @@ function generateFoodOptions(optionType) {
 
 const generateMenuItems = (cat) => {
     mainContainer.innerHTML = `<h2 class="text-center fw-bolder">لیست کامل محصولات</h2>`;
-    console.log('cat ', cat);
+    console.log("cat ", cat);
     cat.forEach((cat) => {
-        foods.some((item) => item.categoryId == cat.id)
-            && mainContainer.insertAdjacentHTML(
+        foods.some((item) => item.categoryId == cat.id) &&
+            mainContainer.insertAdjacentHTML(
                 "beforeend",
                 `
     <!-- Title -->
@@ -171,7 +161,7 @@ const generateMenuItems = (cat) => {
     </div>
     <!-- Title -->
     `
-            )
+            );
 
         const catFoods = foods.filter((item) => item.categoryId === cat.id);
 
@@ -196,7 +186,11 @@ const generateMenuItems = (cat) => {
                     <b>${minPrice}</b>
                     <small>هزار تومان</small>
                 </span>
-                <button class="btn btn-danger" id="delete-item-${item.id}">Delete</button>
+
+                <div class="row justify-content-around">
+                    <button class="btn btn-warning col-5 d-inline" id="edit-item-${item.id}">Edit</button>
+                    <button class="btn btn-danger col-5 d-inline" id="delete-item-${item.id}">Delete</button>
+                </div>
 
                 
 
@@ -244,7 +238,10 @@ const generateMenuItems = (cat) => {
                     <b>${item.price[0]}</b>
                     <small>هزار تومان</small>
                 </span>
-                <button class="btn btn-danger" id="delete-item-${item.id}">Delete</button>
+                <div class="row justify-content-around">
+                    <button class="btn btn-warning col-5 d-inline" id="edit-item-${item.id}">Edit</button>
+                    <button class="btn btn-danger col-5 d-inline" id="delete-item-${item.id}">Delete</button>
+                </div>
             </div>
         </div>
         <!-- item -->
@@ -255,35 +252,26 @@ const generateMenuItems = (cat) => {
     });
 };
 
-
-
 function clearForm() {
     generateMenuItems(category);
     generateCategoryItems();
     generateFoodOptionallity();
-    foodName.value = ''
-    foodOption.innerHTML = `<option selected value="">Select one</option>`
-    foodPrice.value = ''
-    foodDesc.value = ''
-    foodPhoto.value = ''
+    foodName.value = "";
+    foodOption.innerHTML = `<option selected value="">Select one</option>`;
+    foodPrice.value = "";
+    foodDesc.value = "";
+    foodPhoto.value = "";
 }
 
 async function deleteItem(table, id) {
-
-    // getRequest(`${table}`).then(res=>{
-    //     foods = res.json().files(item=> item)
-    //     foods.find
-    // })
-
     console.log(id);
     console.log(foods);
 
-    let itemDelete = foods.find(item => item.id == id)
-    let arrayIndex = foods.indexOf(itemDelete)
+    let itemDelete = foods.find((item) => item.id == id);
+    let arrayIndex = foods.indexOf(itemDelete);
 
     console.log(itemDelete);
     console.log(arrayIndex);
-
 
     let deletedFood = {
         id: 0,
@@ -294,13 +282,49 @@ async function deleteItem(table, id) {
         OptionType: "",
         options: [],
         imgName: "",
-        description: ""
-    }
+        description: "",
+    };
     // deleteRequest(`${table}`, arrayIndex)
-    await setRequest(deletedFood, `${table}`, arrayIndex)
-    await callApiFunctions()
+    await setRequest(deletedFood, `${table}`, arrayIndex);
+    await callApiFunctions();
 }
+async function editItem(table, id) {
+    console.log(id);
+    console.log(foods);
 
+    let itemEdit = foods.find((item) => item.id == id);
+    let catFinded = category.find((item) => item.id == itemEdit.categoryId);
+    console.log("cat finded", catFinded);
+    let arrayIndex = foods.indexOf(itemEdit);
+
+    console.log(itemEdit);
+    console.log(arrayIndex);
+
+    let categorySelectionValue = categorySelection.value;
+
+    foodName.value = itemEdit.title;
+    foodPrice.value = itemEdit.price[0];
+    optionallity.value = itemEdit.OptionType;
+    // foodOption.value =
+    // foodPhoto.files[0].name = itemEdit.imgName
+    console.log("foodPhoto", foodPhoto.src);
+    foodDesc.value = itemEdit.description;
+    const catId = categorySelectionValue.split("-")[0];
+    categorySelection.value = `${catFinded.id} - ${catFinded.title}`;
+
+    let editFood = {
+        id: itemEdit.id,
+        title: foodName.value,
+        categoryId: catId ? Number(catId) : itemEdit.categoryId,
+        price: !itemEdit.price ? [foodPrice.value] : [...itemEdit.price, foodPrice.value],
+        isOptional: optionallity.value !== "" ? true : false,
+        OptionType: optionallity.value !== "" ? optionallity.value : false,
+        options: !itemEdit.options ? [foodOption.value] : [...itemEdit.options, foodOption.value],
+        imgName: itemEdit.imgName ? itemEdit.imgName : foodPhoto.value,
+        description: foodDesc.value,
+    };
+    await setRequest(editFood, `${table}`, arrayIndex);
+}
 
 async function submit(e) {
     const categorySelectionValue = categorySelection.value;
@@ -309,7 +333,6 @@ async function submit(e) {
     const foodOptionValue = foodOption.value;
     const foodPriceValue = foodPrice.value;
     const foodDescValue = foodDesc.value;
-    // const foodPhotoName = foodPhoto.files[0].name;
     const catId = categorySelectionValue.split("-")[0];
 
     let duplicateFood = foods.find((food) => food.title === foodNameValue);
@@ -356,41 +379,38 @@ async function submit(e) {
 
     localStorage.setItem("foods", JSON.stringify(foods));
 
-    await setRequest(foods, 'foods')
-    await callApiFunctions()
+    await setRequest(foods, "foods");
+    await callApiFunctions();
 
-    clearForm()
+    clearForm();
 }
 
-
-
-// API Functions 
+// API Functions
 async function postRequest(array, arrayStringName) {
     let req = `${myFirebaseApi}${arrayStringName}.json`;
     let res = await fetch(req, {
         method: "POST",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(array)
+        body: JSON.stringify(array),
     });
 
     return res;
 }
 async function setRequest(array, arrayStringName, index) {
-
     // let req = `${myFirebaseApi}${arrayStringName}.json`;
-    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`;
     // let req = index ? `${myFirebaseApi}.auth.${uid}/${arrayStringName}/${index}.json` : `${myFirebaseApi}.auth.${uid}/${arrayStringName}.json`
     let res = await fetch(req, {
         method: "PUT",
         headers: { "Content-type": "application/json" },
-        body: JSON.stringify(array)
+        body: JSON.stringify(array),
     });
 
     return res;
 }
 
 async function getRequest(arrayStringName, index) {
-    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`;
     let res = await fetch(req);
     let resJson = await res.json();
     // console.log('res', res);
@@ -400,7 +420,7 @@ async function getRequest(arrayStringName, index) {
 }
 
 async function deleteRequest(arrayStringName, index) {
-    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`
+    let req = index ? `${myFirebaseApi}${arrayStringName}/${index}.json` : `${myFirebaseApi}${arrayStringName}.json`;
     let res = await fetch(req, {
         method: "DELETE",
     });
@@ -409,37 +429,38 @@ async function deleteRequest(arrayStringName, index) {
 }
 
 async function callApiFunctions() {
-    await getRequest('category').then(result => {
-        category = result.filter(item => item)
-        generateCategoryItems();
-    })
-        .catch(err => { callApiFunctions() })
-    await getRequest('foods').then(result => {
-        foods = result
-        console.log(foods);
-        generateMenuItems(category);
-    })
-        .catch(err => { callApiFunctions() })
+    await getRequest("category")
+        .then((result) => {
+            category = result.filter((item) => item);
+            generateCategoryItems();
+        })
+        .catch((err) => {
+            callApiFunctions();
+        });
+    await getRequest("foods")
+        .then((result) => {
+            foods = result;
+            console.log(foods);
+            generateMenuItems(category);
+        })
+        .catch((err) => {
+            callApiFunctions();
+        });
 
-    await getRequest('foodOptionType').then(result => {
-        console.log(result);
-        foodOptionType = result.filter(item => item)
-        generateFoodOptionallity()
-    })
-        .catch(err => { callApiFunctions() })
-
+    await getRequest("foodOptionType")
+        .then((result) => {
+            console.log(result);
+            foodOptionType = result.filter((item) => item);
+            generateFoodOptionallity();
+        })
+        .catch((err) => {
+            callApiFunctions();
+        });
 }
-
-
 
 // Call Functions
 
-
-callApiFunctions()
-
-
-
-
+callApiFunctions();
 
 optionallity.addEventListener("change", (e) => {
     const optionallityValue = optionallity.value;
@@ -450,106 +471,21 @@ optionallity.addEventListener("change", (e) => {
 
 // Events
 
-mainContainer.addEventListener('click', e => {
+mainContainer.addEventListener("click", (e) => {
+    const idd = e.target.id.includes("delete") && e.target.id.split("-")[2];
+    idd && deleteItem("foods", idd);
+});
+mainContainer.addEventListener("click", (e) => {
+    const idd = e.target.id.includes("edit") && e.target.id.split("-")[2];
+    idd && editItem("foods", idd);
+});
 
-    const idd = e.target.id.includes('delete') && e.target.id.split('-')[2]
-    idd && deleteItem('foods', idd)
-
-
-})
-
-
-foodPhoto.addEventListener('change', e => {
+foodPhoto.addEventListener("change", (e) => {
     foodPhotoName = e.target.files[0].name;
     console.log(foodPhotoName);
-})
+});
 
 formSubmit.addEventListener("submit", (e) => {
     e.preventDefault();
-    submit()
-
+    submit();
 });
-
-
-
-// foods = [
-//     {
-//         id: 0,
-//         title: "deleted",
-//         categoryId: 0,
-//         price: [0],
-//         isOptional: false,
-//         OptionType: "",
-//         options: [],
-//         imgName: "",
-//         description: ""
-//     },
-//     {
-
-//         id: 1,
-//         title: "هالومی 🌶| Halloumi",
-//         categoryId: 4,
-//         price: [127, 120],
-//         isOptional: true,
-//         OptionType: "نوع پخت مرغ",
-//         options: ["مرغ گریل", "مرغ سوخاری"],
-//         imgName: "Halloumi.jpg",
-//         description:
-//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
-//     },
-//     {
-//         id: 2,
-//         title: "هالومی 🌶| Halloumi",
-//         categoryId: 4,
-//         price: [127, 120, 110],
-//         isOptional: true,
-//         OptionType: "نوع شومفخ مرغ",
-//         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
-//         imgName: "Halloumi.jpg",
-//         description:
-//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
-//     },
-//     {
-//         id: 3,
-//         title: "هالومی 🌶| Halloumi",
-//         categoryId: 4,
-//         price: [127],
-//         isOptional: false,
-//         OptionType: "نوع پخت مرغ",
-//         options: ["مرغ گریل", "مرغ سوخاری"],
-//         imgName: "Halloumi.jpg",
-//         description:
-//             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
-//     },
-//     {
-//         id: 4,
-//         title: "آووکادو تست🥑 | Avocado Toast",
-//         categoryId: 7,
-//         price: [187],
-//         isOptional: false,
-//         OptionType: "",
-//         options: [],
-//         imgName: "avocado-toast-normal.jpg",
-//         description:
-//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
-//     },
-//     {
-//         id: 5,
-//         title: "آووکادو تست🥑 | Avocado Toast",
-//         categoryId: 7,
-//         price: [187],
-//         isOptional: false,
-//         OptionType: "",
-//         options: [],
-//         imgName: "avocado-toast-normal.jpg",
-//         description:
-//             "آووکادو تست  یک تست خامه‌ای و کریسپی و ترد است که یک صبحانه و میان وعده به شمار می‌رود و یا یک غذای خوشمزه و ساده است و بهتر است بلافاصله مصرف شود زیرا آووکادو با گذشت زمان تغییر رنگ می‌دهد و قهوه‌ای و فاسد می‌شود Avocado toast is creamy, crisp and so satisfying. Its a delicious and simple breakfast, snack or light meal! Its best consumed immediately, since the avocado browns over time",
-//     },
-// ];
-
-
-// setRequest(foods, 'foods')
-
-
-// setRequest(category, 'category')
-// setRequest(foodOptionType, 'foodOptionType')
