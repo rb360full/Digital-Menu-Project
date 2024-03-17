@@ -12,7 +12,8 @@ const optionallity = document.getElementById("optionallity");
 const foodOption = document.getElementById("food-option");
 const foodPrice = document.getElementById("food-price");
 const foodDesc = document.getElementById("food-desc");
-let foodPhoto = document.getElementById("food-photo");
+const foodPhoto = document.getElementById("food-photo");
+let foodIdEditValue;
 
 // DataBase
 
@@ -176,7 +177,6 @@ const generateMenuItems = (cat) => {
             <div class="col-4 col-sm-3 d-flex flex-column p-0 justify-content-center align-items-center food-photo-container" >
                 <div class="ps-2 pb-2 food-photo-container" >
                      <img class="img-fluid food-photo-container  rounded rounded-2" src="../images/${item.imgName}" alt="image"/>
-                    <input type="file" class="form-control" name="" id="change-food-photo" style="display: none;" />
                 </div>
             </div>
             <div class="menu-item-text col-8 col-sm-9 d-flex flex-column p-0 ">
@@ -254,39 +254,6 @@ const generateMenuItems = (cat) => {
 };
 
 
-async function editItem2(e) {
-    let menuItem = e.target.closest(".menu-item");
-    let foodId = menuItem.id.split("-")[1];
-    let food = foods.find((item) => item.id == foodId);
-    let image = e.target.closest(".menu-item").children[0].children[0].querySelector("img");
-    let changeFoodPhoto = document.getElementById('change-food-photo');
-    let photo;
-    e.target.className.includes('food-photo-container') && changeFoodPhoto.click();
-    let arrayIndex;
-    let editFood;
-    changeFoodPhoto.addEventListener('change', (e) => {
-        e ? photo = e.target.files[0].name : null
-        image.src = `../images/${photo}`
-        arrayIndex = foods.indexOf(food);
-        editFood = {
-            id: foodId,
-            title: food.title,
-            categoryId: food.categoryId,
-            price: food.price,
-            isOptional: food.isOptional,
-            OptionType: food.OptionType,
-            options: food.options,
-            imgName: photo,
-            description: food.description,
-        };
-        setRequest(editFood, "foods", arrayIndex);
-    })
-}
-
-
-mainContainer.addEventListener("click", (e) => {
-    editItem2(e)
-})
 
 
 
@@ -307,12 +274,14 @@ function clearForm() {
     generateMenuItems(category);
     generateCategoryItems();
     generateFoodOptionallity();
-    foodName.value = "";
     foodOption.innerHTML = `<option selected value="">Select one</option>`;
-    foodPrice.value = "";
-    foodDesc.value = "";
-    foodPhoto.value = "";
-    foodIdEdit.value = "";
+    // foodName.value = "";
+    // foodPrice.value = "";
+    // foodDesc.value = "";
+    formSubmit.reset();
+    foodPhotoName = "";
+
+
 }
 
 async function deleteItem(table, id) {
@@ -339,8 +308,10 @@ async function deleteItem(table, id) {
     await setRequest(deletedFood, `${table}`, arrayIndex);
     await callApiFunctions();
 }
-async function editItem(table, id) {
-    foodIdEdit.value = id
+async function editItem(id) {
+    // foodIdEditValue = id
+    foodIdEdit.setAttribute('value', id)
+    foodIdEditValue = foodIdEdit.getAttribute('value');
     let food = foods.find((item) => item.id == id);
     let catFinded = category.find((item) => item.id == food.categoryId);
     // let arrayIndex = foods.indexOf(food);
@@ -372,7 +343,7 @@ async function submit(e) {
     const foodDescValue = foodDesc.value;
     const catId = categorySelectionValue.split("-")[0];
 
-    let duplicateFood = foods.find((food) => food.id == foodIdEdit.value);
+    let duplicateFood = foods.find((food) => food.id == foodIdEditValue);
     let duplicateFoodIndex = foods.indexOf(duplicateFood);
     // console.log(foods);
     // console.log(foods[1]);
@@ -430,7 +401,8 @@ async function submit(e) {
         // localStorage.setItem("foods", JSON.stringify(foods));
         console.log(duplicateFood);
 
-    } else {
+    }
+    else {
         // Generate Food id
         foods.forEach((food) => {
             foodIds.push(food.id);
@@ -445,9 +417,9 @@ async function submit(e) {
             title: foodNameValue,
             categoryId: Number(catId),
             price: [foodPriceValue],
-            isOptional: optionallityValue !== "" ? true : false,
-            OptionType: optionallityValue !== "" ? optionallityValue : false,
-            options: [foodOptionValue !== "" ? foodOptionValue : null],
+            isOptional: foodOptionValue ? true : false,
+            OptionType: foodOptionValue ? optionallityValue : false,
+            options: [foodOptionValue ? foodOptionValue : null],
             imgName: foodPhotoName,
             description: foodDescValue,
         };
@@ -551,7 +523,7 @@ optionallity.addEventListener("change", (e) => {
 });
 
 foodOption.addEventListener('change', e => {
-    let food = foodIdEdit && foods.find(item => item.id == foodIdEdit.value)
+    let food = foodIdEditValue && foods.find(item => item.id == foodIdEditValue)
     food.options && food.options.forEach(option => {
 
         console.log(food.options.indexOf(option));
@@ -566,7 +538,7 @@ mainContainer.addEventListener("click", (e) => {
 });
 mainContainer.addEventListener("click", (e) => {
     const idd = e.target.id.includes("edit") && e.target.id.split("-")[2];
-    idd && editItem("foods", idd);
+    idd && editItem(idd);
 });
 
 foodPhoto.addEventListener("change", (e) => {
