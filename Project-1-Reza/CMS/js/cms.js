@@ -3,7 +3,6 @@
 let foodPhotoName;
 let foodIdEdit = document.getElementById('food-id-edit');
 const myFirebaseApi = "https://digital-online-menu-default-rtdb.firebaseio.com/";
-const uid = "076cdb8b-2f9a-4bc1-a0af-d606e3086180";
 const categoryElement = document.getElementById("category-selection");
 const mainContainer = document.getElementById("main-container");
 const formSubmit = document.querySelector("form");
@@ -63,8 +62,8 @@ let foods = [];
 //         categoryId: 4,
 //         price: [127, 120, 110],
 //         isOptional: true,
-//         OptionType: "نوع شومفخ مرغ",
-//         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
+//         OptionType: "نوع پخت مرغ",
+//         options: ["مرغ گریل", "مرغ سوخاری"],
 //         imgName: "Halloumi.jpg",
 //         description:
 //             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
@@ -386,12 +385,35 @@ async function submit(e) {
 
 
     if (duplicateFood) {
+        if (!duplicateFood.isOptional) {
+            if (foodOption.value) {
+                duplicateFood.isOptional = true
+                duplicateFood.OptionType = [optionallityValue]
+                duplicateFood.options[0] = foodOption.value
+            }
+            duplicateFood.price[0] = Number(foodPrice.value)
+        }
 
-        duplicateFood.options.forEach(option => {
+        else {
+            const isExistOption = duplicateFood.options.some(option => option == foodOption.value)
 
-            console.log(duplicateFood.options.indexOf(option));
-            foodOption.value == option ? duplicateFood.price[duplicateFood.options.indexOf(option)] = Number(foodPrice.value) : null
-        })
+            if (isExistOption) {
+                duplicateFood.options.forEach((option, index) => {
+                    if (option == foodOption.value) { duplicateFood.price[index] = Number(foodPrice.value) }
+
+
+                })
+            }
+
+            else {
+                duplicateFood.options.push(foodOptionValue)
+                duplicateFood.price.push(Number(foodPrice.value))
+            }
+        }
+
+
+
+
 
 
         foods[duplicateFoodIndex] = {
@@ -399,15 +421,15 @@ async function submit(e) {
             title: foodNameValue,
             categoryId: catId ? Number(catId) : duplicateFood.categoryId,
             price: duplicateFood.price,
-            isOptional: optionallityValue !== "" ? true : false,
+            isOptional: duplicateFood.isOptional,
             OptionType: optionallityValue !== "" ? optionallityValue : false,
-            options: !duplicateFood.options ? [foodOptionValue] : [...duplicateFood.options, foodOptionValue],
+            options: !duplicateFood.options ? [foodOptionValue] : duplicateFood.options,
             imgName: foodPhotoName || duplicateFood.imgName,
             description: foodDescValue,
         };
         // localStorage.setItem("foods", JSON.stringify(foods));
         console.log(duplicateFood);
-        
+
     } else {
         // Generate Food id
         foods.forEach((food) => {
@@ -431,11 +453,11 @@ async function submit(e) {
         };
 
         foods.push(foodObject);
-        
+
     }
-    
-    
-    
+
+
+
     await setRequest(foods, "foods");
     await callApiFunctions();
 
@@ -530,7 +552,7 @@ optionallity.addEventListener("change", (e) => {
 
 foodOption.addEventListener('change', e => {
     let food = foodIdEdit && foods.find(item => item.id == foodIdEdit.value)
-    food.options.forEach(option => {
+    food.options && food.options.forEach(option => {
 
         console.log(food.options.indexOf(option));
         foodOption.value == option ? foodPrice.value = food.price[food.options.indexOf(option)] : null
@@ -592,7 +614,7 @@ formSubmit.addEventListener("submit", (e) => {
 //         price: [127, 120, 110],
 //         isOptional: true,
 //         OptionType: "نوع پخت مرغ",
-//         options: ["مرغ گریل", "مرغ سوخاری", "مرغ پخته"],
+//         options: ["مرغ گریل", "مرغ سوخاری"],
 //         imgName: "Halloumi.jpg",
 //         description:
 //             "سینه مرغ، بیبی اسفناج، کاهو رسمی، پنیر هالومی، سس سبز  Grilled Chicken, Grilled Halloumi, Cheese, Lettuce, Apples, Baby Spinach, Strawberry Dressing",
@@ -635,5 +657,5 @@ formSubmit.addEventListener("submit", (e) => {
 //     },
 // ];
 
-// setRequest(foods, "foods")
+// setRequest(foods, 'foods')
 
