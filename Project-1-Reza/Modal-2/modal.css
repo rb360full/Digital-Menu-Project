@@ -15,22 +15,10 @@
 }
 
 .dialog-title-container {
-  font-family: iranSans;
-  box-sizing: border-box;
-  float: right !important;
   width: 100%;
   touch-action: pan-x;
 }
 
-.dialog-title {
-  /* margin: 0.67em 0; */
-  /* margin-bottom: 0.5rem; */
-  /* line-height: 1.2; */
-  /* color: #fff !important; */
-  /* text-align: center; */
-  /* user-select: none; */
-  /* -webkit-user-select: none; */
-}
 .dialog button:active {
   box-shadow: inset 0 0 0 2px var(--om-secondary-subtle2) !important;
 }
