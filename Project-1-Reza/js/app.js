@@ -376,18 +376,41 @@ function cardPlusFunc(event, foodId, optionIndex, optionPrice) {
     addBtns = document.querySelectorAll('.add-btn')
 }
 
-function cardMinusFunc(event, foodId) {
+function cardMinusFunc(event, foodId,) {
     foodToCard = CardItems.find(item => item.id == foodId) || foods.find(item => item.id == foodId)
 
+    const optionIndex = event.target.id.split('-')[3]
+    console.log(event);
+    console.log(optionIndex);
     const index = CardItems.indexOf(foodToCard)
     cardCount = event.target.previousElementSibling;
+    if (!foodToCard.isOptional) {
+        CardItems[index].quantity--
+        cardCount.innerHTML = CardItems[index].quantity
+    }
+    else if (foodToCard.isOptional && CardItems[index].quantity[optionIndex]) {
+        foodToCard.quantity[optionIndex]--
+        cardCount.innerHTML = CardItems[index].quantity[optionIndex]
+    }
+    // else if (foodToCard.isOptional && !CardItems[index].quantity[optionIndex]) {
+    //     foodToCard.quantity[optionIndex] = 1
+    //     cardCount = event.target.nextElementSibling;
+    //     console.log(cardCount);
+    //     cardCount.innerHTML = CardItems[index].quantity[optionIndex]
+    // }
     // const isInCard = CardItems.some(item => item == foodToCard)
-    foodToCard.quantity--;
-    cardCount.innerHTML = CardItems[index].quantity
+    // foodToCard.quantity--;
 
-    if (foodToCard.quantity == 0) {
-        CardItems[index].quantity = 0
-        CardItems.splice(index, 1)
+    if (foodToCard.quantity == 0 || CardItems[index].quantity[optionIndex] == 0) {
+        if (CardItems[index].quantity == 0 || CardItems[index].quantity.length == 1) {
+            CardItems.splice(index, 1)
+        }
+
+        else {
+            CardItems[index].quantity.splice(optionIndex, 1)
+
+        }
+
         const addCard = event.target.closest('.added-to-card')
         const addBtn = `
                 <a href="##" class="add-btn fade-in float-end text-white fs-6 px-4 py-2 bg-primary-dark rounded rounded-5" id="add-food-${foodToCard.id}"
@@ -455,6 +478,7 @@ function changeAddBtn(e) {
         addBtn.outerHTML = addCard
         // cardCount = e.target.closest('.card-count')
     }
+
 
 }
 
