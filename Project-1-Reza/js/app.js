@@ -435,20 +435,18 @@ function cardUpdateFunc(btns) {
 
             const foodId = addBtn.id.split('-')[2]
             foodId ? foodToCard = CardItems.find(item => item.id == foodId) : null
+            const optionIndex = addBtn.previousElementSibling.previousElementSibling.id.split('-')[2]
             if (foodToCard) {
                 const addCard = `
                 <a href="##" class="added-to-card fade-in text-white float-end  fs-6 px-3 py-0 bg-primary-dark border rounded rounded-5" id="added-food-${foodId}">
-                <ul class="d-flex justify-content-between align-items-baseline p-0 pb-1 ">
-                <li class="card-plus pt-2 pe-2" onclick="cardPlusFunc(event, ${foodId})">+</li>
-                <li class="card-count pt-2 px-1">${foodToCard.quantity}</li>
-                <li class="card-minus pt-2 ps-2" onclick="cardMinusFunc(event, ${foodId})">-</li>
-                </ul>
+                    <ul class="d-flex justify-content-between align-items-baseline p-0 pb-1 ">
+                        <li class="card-plus pt-2 pe-2" id="card-plus-option-${optionIndex}" onclick="cardPlusFunc(event, ${foodId} , ${optionIndex})">+</li>
+                        <li class="card-count pt-2 px-1">${foodToCard.isOptional ? foodToCard.quantity[optionIndex] : foodToCard.quantity}</li>
+                        <li class="card-minus pt-2 ps-2" id="card-minus-option-${optionIndex}"  onclick="cardMinusFunc(event, ${foodId},${optionIndex})">-</li>
+                    </ul>
                 </a>`
                 addBtn.outerHTML = addCard
             }
-
-
-
         })
 
     }
