@@ -426,6 +426,10 @@ function cardMinusFunc(event, foodId,) {
 
     }
     console.log(CardItems);
+
+    const quantityArray = foodToCard.quantity[optionIndex]
+    const maxQuantity = quantityArray ? Math.max(...foodToCard.quantity) : null
+    if (!quantityArray && maxQuantity == 0) CardItems.splice(index, 1)
     localStorage.setItem('cardItems', JSON.stringify(CardItems))
     addBtns = document.querySelectorAll('.add-btn')
 
