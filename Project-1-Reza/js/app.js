@@ -576,7 +576,7 @@ function cardPlusFunc(event, foodId, optionIndex) {
     addBtns = document.querySelectorAll('.add-btn')
     addedBtns = document.querySelectorAll('.added-to-card')
     cardCount && btnUpdateFunc(foodId, optionIndex, cardCount.innerHTML)
-    foodCardSum.innerHTML = (cardSumFunc(cardItems) * 1000).toLocaleString();
+    foodCardSum.innerHTML = cardItems ? (cardSumFunc(cardItems) * 1000).toLocaleString() : 0
 }
 
 function cardMinusFunc(event, foodId) {
