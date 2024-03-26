@@ -19,6 +19,7 @@
   --om-info-dark: #0e8590;
   --om-blue: #081d40;
 }
+
 :root.theme1 {
   --om-primary: #bb2f98;
   --om-primary-dark: #52063f;
@@ -35,6 +36,26 @@
   --om-success: #890baf;
   --om-dark: #570670;
   --om-dark-subtle: #6e0b8c;
+  --om-info: #42b7bb;
+  --om-info-dark: #307379;
+  --om-blue: #3542cf;
+}
+:root.theme2 {
+  --om-primary: #3c1ccd;
+  --om-primary-dark: #1d0b6b;
+  --om-primary-dark2: #080321;
+  --om-primary-subtle: #5435df;
+  --om-primary-subtle2: #8169ed;
+  --om-primary-subtle3: #9a85f5;
+
+  --om-secondary: #171328;
+  --om-secondary-subtle: #201f28;
+  --om-secondary-subtle2: #32303a;
+  --om-secondary-subtle3: #49484b;
+
+  --om-success: #042bae;
+  --om-dark: #182349;
+  --om-dark-subtle: #172348;
   --om-info: #42b7bb;
   --om-info-dark: #307379;
   --om-blue: #3542cf;
@@ -292,13 +313,13 @@ li {
 }
 .theme-active {
   left: 0%;
-  animation: theme-open 2s forwards;
+  animation: theme-open 1s forwards;
 }
 
 @media (max-width: 576px) {
   .theme-hide {
     left: -10%;
-    animation: theme-close 2s forwards;
+    animation: theme-close 1s forwards;
   }
   @keyframes theme-open {
     from {
@@ -310,7 +331,7 @@ li {
 @media (min-width: 576px) {
   .theme-hide {
     left: -7%;
-    animation: theme-close 2s forwards;
+    animation: theme-close 1s forwards;
   }
   @keyframes theme-open {
     from {
@@ -321,7 +342,7 @@ li {
 @media (min-width: 768px) {
   .theme-hide {
     left: -4%;
-    animation: theme-close 2s forwards;
+    animation: theme-close 1s forwards;
   }
   @keyframes theme-open {
     from {
@@ -333,7 +354,7 @@ li {
 @media (min-width: 992px) {
   .theme-hide {
     left: -3%;
-    animation: theme-close 2s forwards;
+    animation: theme-close 1s forwards;
   }
   @keyframes theme-open {
     from {
