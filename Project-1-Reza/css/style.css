@@ -40,9 +40,6 @@
   --om-blue: #53c516;
 }
 
-
-
-
 .bg-primary {
   background-color: var(--om-primary) !important;
 }
@@ -294,8 +291,69 @@ li {
 .theme-container {
   z-index: 1040 !important;
 }
+.theme-active {
+  left: 0%;
+  animation: theme-open 2s forwards;
+}
 
-.theme-settings-icons {
+
+@media (max-width : 576px) {
+  .theme-hide {
+    left: -10%;
+    animation: theme-close 2s forwards;
+  }
+  @keyframes theme-open {
+    from {
+      left: -10%;
+    }
+  }
+  
+}
+
+@media (min-width: 576px) {
+  .theme-hide {
+    left: -7%;
+    animation: theme-close 2s forwards;
+  }
+  @keyframes theme-open {
+    from {
+      left: -7%;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .theme-hide {
+    left: -4%; 
+    animation: theme-close 2s forwards;
+  }
+  @keyframes theme-open {
+    from {
+      left: -4%;
+    }
+  }
+} 
+
+@media (min-width: 992px) {
+  .theme-hide {
+    left: -3%; 
+    animation: theme-close 2s forwards;
+  }
+  @keyframes theme-open {
+    from {
+      left: -3%;
+    }
+  }
+}
+
+@keyframes theme-close {
+  from {
+    left: 0%;
+  }
+}
+
+
+
+.theme-settings-icon {
   z-index: 2050 !important;
   cursor: pointer;
 }

@@ -11,7 +11,8 @@ const orderListHeader = document.querySelector('.order-list-header')
 const orderListFooter = document.querySelector('.order-list-footer')
 const themeItems = document.querySelectorAll('.theme-item')
 const themes = document.querySelector('.themes')
-
+const themeSettingsIcon = document.querySelector('.theme-settings-icon')
+const themeContainer = document.querySelector('.theme-container')
 let foodCardSum;
 const myFirebaseApi = "https://digital-online-menu-default-rtdb.firebaseio.com/";
 const myJsonDb = "./databaseJSON/db.json"
@@ -118,7 +119,11 @@ let foods = [];
 
 
 
+themeSettingsIcon.addEventListener('click', e => {
+    themeContainer.classList.toggle('theme-hide')
+    themeContainer.classList.toggle('theme-active')
 
+})
 
 
 
