@@ -19,6 +19,26 @@
   --om-info-dark: #0e8590;
   --om-blue: #081d40;
 }
+:root.theme1 {
+  --om-primary: #33dc00;
+  --om-primary-dark: #2d57ca;
+  --om-primary-dark2: #b959b2;
+  --om-primary-subtle: #bad933;
+  --om-primary-subtle2: #691770;
+  --om-primary-subtle3: #bf2068;
+
+  --om-secondary: #0c0c6b;
+  --om-secondary-subtle: #afafc8;
+  --om-secondary-subtle2: #91cf7e;
+  --om-secondary-subtle3: #700707;
+
+  --om-success: #551bf8;
+  --om-dark: #1c4ba2;
+  --om-dark-subtle: #16439f;
+  --om-info: #42b7bb;
+  --om-info-dark: #5abec7;
+  --om-blue: #53c516;
+}
 
 
 
