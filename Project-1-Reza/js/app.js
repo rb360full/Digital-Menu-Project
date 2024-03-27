@@ -119,11 +119,7 @@ let foods = [];
 
 
 
-themeSettingsIcon.addEventListener('click', e => {
-    themeContainer.classList.toggle('theme-hide')
-    themeContainer.classList.toggle('theme-active')
 
-})
 
 
 
@@ -291,24 +287,24 @@ async function generateCard(cardItemsArray) {
                     flag = true
                     const optionIndex = 0
                     addCard = `
-                    <a href="##" class="added-to-card fade-in text-white float-end  fs-6 px-3 py-0 bg-primary-dark border rounded rounded-5" id="added-food-${item.id}">
-                        <ul class="d-flex justify-content-between align-items-baseline p-0 pb-1 ">
-                            <li class="card-plus pt-2 pe-2" id="card-plus-option-${optionIndex}" onclick="cardPlusFunc(event, ${item.id} , ${optionIndex})">+</li>
-                            <li class="card-count pt-2 px-1">${item.isOptional ? item.quantity[optionIndex] : item.quantity}</li>
-                            <li class="card-minus pt-2 ps-2" id="card-minus-option-${optionIndex}"  onclick="cardMinusFunc(event, ${item.id},${optionIndex})">-</li>
+                    <a href="##" class="added-to-card fade-in text-white float-end  fs-7 fs-md-6 fs-lg-4  px-2  py-0 bg-primary-dark border rounded rounded-5" id="added-food-${item.id}">
+                        <ul class="d-flex justify-content-between align-items-baseline p-0 py-1 px-lg-3 py-lg-2">
+                            <li class="card-plus" id="card-plus-option-${optionIndex}" onclick="cardPlusFunc(event, ${item.id} , ${optionIndex})">+</li>
+                            <li class="card-count px-2 px-lg-3">${item.isOptional ? item.quantity[optionIndex] : item.quantity}</li>
+                            <li class="card-minus" id="card-minus-option-${optionIndex}"  onclick="cardMinusFunc(event, ${item.id},${optionIndex})">-</li>
                         </ul>
                     </a>`
                     cardItem = `
-                    <div class="menu-item h-7vh row w-95  bg-secondary-subtle2 text-white mx-auto my-2  px-4 rounded rounded-5 overflow-hidden" id="food-${item.id}">
-                        <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100">
+                    <div class="menu-item h-7vh row w-95  bg-secondary-subtle2 text-white mx-auto my-2  px-1 px-lg-5 rounded rounded-5 overflow-hidden" id="food-${item.id}">
+                        <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100 ">
                             ${addCard}
-                            <span class="fs-6l mt-2 mb-2  px-4 ">
+                            <span class="fs-6 mt-2 mb-2  px-4 fs-lg-5 ">
                                 <b>${item.price[optionIndex]}</b>
-                                <small>هزار تومان</small>
+                                <small class="smallest">هزار تومان</small>
                             </span>
                         </div>
-                        <div class="col-4 col-sm-3 d-flex p-0 py-2 align-items-center">
-                            <h5 class="menu-item-title p-0 m-0">${item.title}</h5>
+                        <div class="col-4 col-sm-3 d-flex p-0 py-2 align-items-center position-relative start-5-minus">
+                            <h5 class="menu-item-title fs-6 fs-lg-3 p-0 m-0">${item.title}</h5>
                         </div>
                     </div>`
                     orderListBody.insertAdjacentHTML('beforeend', cardItem)
@@ -320,26 +316,26 @@ async function generateCard(cardItemsArray) {
                         if (item.quantity[optionIndex] != 0) {
                             flag = true
                             addCard = `
-                            <a href="##" class="added-to-card fade-in text-white float-end  fs-6 px-3 py-0 bg-primary-dark border rounded rounded-5" id="added-food-${item.id}">
-                                <ul class="d-flex justify-content-between align-items-baseline p-0 pb-1 ">
-                                    <li class="card-plus pt-2 pe-2" id="card-plus-option-${optionIndex}" onclick="cardPlusFunc(event, ${item.id} , ${optionIndex})">+</li>
-                                    <li class="card-count pt-2 px-1">${item.isOptional ? item.quantity[optionIndex] : item.quantity}</li>
-                                    <li class="card-minus pt-2 ps-2" id="card-minus-option-${optionIndex}"  onclick="cardMinusFunc(event, ${item.id},${optionIndex})">-</li>
+                            <a href="##" class="added-to-card fade-in text-white float-end  fs-7 fs-md-6 fs-lg-4  px-2  py-0 bg-primary-dark border rounded rounded-5 " id="added-food-${item.id}">
+                                <ul class="d-flex justify-content-between align-items-baseline p-0 py-1 px-lg-3 py-lg-2">
+                                    <li class="card-plus" id="card-plus-option-${optionIndex}" onclick="cardPlusFunc(event, ${item.id} , ${optionIndex})">+</li>
+                                    <li class="card-count px-2 px-lg-3">${item.isOptional ? item.quantity[optionIndex] : item.quantity}</li>
+                                    <li class="card-minus" id="card-minus-option-${optionIndex}"  onclick="cardMinusFunc(event, ${item.id},${optionIndex})">-</li>
                                 </ul>
                             </a>`
 
-                            cardItem = `
-                            <div class="menu-item h-7vh row w-95  bg-secondary-subtle2 text-white mx-auto my-2  px-4 rounded rounded-5 overflow-hidden" id="food-${item.id}">
-                                <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100">
+                            cardItem= `
+                            <div class="menu-item h-7vh row w-95  bg-secondary-subtle2 text-white mx-auto my-2  px-1 px-lg-5 rounded rounded-5 overflow-hidden " id="food-${item.id}">
+                                <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100 ">
                                     ${addCard}
-                                    <span class="fs-6l mt-2 mb-2  px-4 ">
+                                    <span class="fs-6 mt-2 mb-2  px-4 fs-lg-5 ">
                                         <b>${item.price[optionIndex]}</b>
-                                        <small>هزار تومان</small>
+                                        <small class="smallest">هزار تومان</small>
                                     </span>
                                 </div>
-                                <div class="col-4 col-sm-3 d-flex p-0 py-2 align-items-center">
-                                    <h5 class="menu-item-title p-0 m-0">${item.title}</h5>
-                                    <small class="ps-4 m-0 text-primary">${item.options[optionIndex]}</small>
+                                <div class="col-4 col-sm-3 d-flex p-0 py-2 align-items-center position-relative start-5-minus">
+                                    <h5 class="menu-item-title fs-6 fs-lg-3 p-0 m-0">${item.title}</h5>
+                                    <small class="ps-0 ms-1 text-primary smallest fs-lg-6l">${item.options[optionIndex]}</small>
                                 </div>
                             </div>`
                             orderListBody.insertAdjacentHTML('beforeend', cardItem)
@@ -356,10 +352,10 @@ async function generateCard(cardItemsArray) {
     const sumCardItems = `
         <div class="menu-item h-7vh row w-95 justify-content-between bg-secondary-subtle2 text-white mx-auto my-2  px-4 rounded rounded-5 overflow-hidden">
                 <div class="col-4 col-sm-3 d-flex p-0 py-2 align-items-center">
-                    <h3 class="menu-item-title text-warning fw-bolder p-0 ps-5 m-0">مجموع</h3>
+                    <h3 class="menu-item-title text-warning fw-bolder p-0 ps-2 m-0 fs-5 fs-lg-3">مجموع</h3>
                 </div>
                 <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100 text-end w-auto">
-                    <span class="fs-6l mt-2 mb-2  px-4 ">
+                    <span class="fs-6 fs-lg-4 mt-2 mb-2  ps-4 ">
                         <b id="food-card-sum">${(cardSumFunc(cardItems) * 1000).toLocaleString()}</b>
                         <small>تومان</small>
                     </span>
@@ -851,7 +847,11 @@ window.addEventListener('load', () => {
 
 
 
+themeSettingsIcon.addEventListener('click', e => {
+    themeContainer.classList.toggle('theme-hide')
+    themeContainer.classList.toggle('theme-active')
 
+})
 
 
 

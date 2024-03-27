@@ -253,12 +253,12 @@ li {
     width: 0;
   }
   100% {
-    width: 80vw;
+    width: 100vw;
   }
 }
 @keyframes fade-out-width {
   0% {
-    width: 80vw;
+    width: 100vw;
   }
   100% {
     width: 0;

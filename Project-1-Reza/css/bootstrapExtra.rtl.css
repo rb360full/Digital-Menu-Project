@@ -623,9 +623,14 @@
 .fs-7 {
   font-size: 0.75rem !important;
 }
-
+.small {
+  font-size: 0.875em;
+}
 .smaller {
   font-size: 0.78em;
+}
+.smallest {
+  font-size: 0.65em;
 }
 
 @media (min-width: 576px) {
@@ -1118,6 +1123,15 @@
   .fs-sm-7 {
     font-size: 0.75rem !important;
   }
+  .small-sm {
+    font-size: 0.875em;
+  }
+  .smaller-sm {
+    font-size: 0.78em;
+  }
+  .smallest-sm {
+    font-size: 0.65em;
+  }
 }
 
 @media (min-width: 768px) {
@@ -1607,6 +1621,15 @@
   .fs-md-7 {
     font-size: 0.75rem !important;
   }
+  .small-md {
+    font-size: 0.875em;
+  }
+  .smaller-md {
+    font-size: 0.78em;
+  }
+  .smallest-md {
+    font-size: 0.65em;
+  }
 }
 
 @media (min-width: 992px) {
@@ -2094,6 +2117,15 @@
   .fs-lg-7 {
     font-size: 0.75rem !important;
   }
+  .small-lg {
+    font-size: 0.875em;
+  }
+  .smaller-lg {
+    font-size: 0.78em;
+  }
+  .smallest-lg {
+    font-size: 0.65em;
+  }
 }
 
 @media (min-width: 1200px) {
@@ -2579,6 +2611,15 @@
   .fs-xl-7 {
     font-size: 0.75rem !important;
   }
+  .small-xl {
+    font-size: 0.875em;
+  }
+  .smaller-xl {
+    font-size: 0.78em;
+  }
+  .smallest-xl {
+    font-size: 0.65em;
+  }
 }
 
 @media (min-width: 1400px) {
@@ -3063,5 +3104,14 @@
   }
   .fs-xxl-7 {
     font-size: 0.75rem !important;
+  }
+  .small-xxl {
+    font-size: 0.875em;
+  }
+  .smaller-xxl {
+    font-size: 0.78em;
+  }
+  .smallest-xxl {
+    font-size: 0.65em;
   }
 }
