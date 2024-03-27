@@ -149,17 +149,15 @@ function changeTheme(themeId) {
 
 function generateCategoryItems() {
     category.forEach((catItem) => {
-        categoryContainer.insertAdjacentHTML(
-            "afterbegin",
-            `
-        <div class="cat-item bg-primary-subtle2 rounded rounded-4 ms-4 pt-2">
-            <a href="#cat-${catItem.id}" class="d-flex flex-column justify-content-center align-items-center">
-                <img class="w-60" src="images/icons/${catItem.imgName}" alt="" />
-                <p class="text-center">${catItem.title}</p>
-            </a>
-        </div>
-        `
-        );
+        const catTitleShort = catItem.title.split('|')[0]
+        const castItem = `
+                <div class="cat-item bg-primary-subtle2 d-flex flex-column justify-content-center align-items-center rounded rounded-4 me-3 pt-1 h-70 w-25vw w-sm-17vw w-md-10vw h-md-80 w-xl-8vw">
+                    <a href="#cat-${catItem.id}" class="d-flex flex-column justify-content-center align-items-center">
+                        <img class="w-45 w-md-65 w-xl-60" src="images/icons/${catItem.imgName}" alt="" />
+                        <p class="text-center">${catTitleShort}</p>
+                    </a>
+                </div>`
+        categoryContainer.insertAdjacentHTML("afterbegin", castItem);
     });
 }
 
