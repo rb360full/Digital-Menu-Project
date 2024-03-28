@@ -5,6 +5,7 @@ const categoryContainer = document.querySelector(".category");
 const categoryElem = document.querySelector(".category");
 const dialogContainer = document.querySelector('.dialog-container')
 const orderListIcon = document.querySelector('.order-list-icon');
+const closeCardBtn = document.querySelector('.close-card-btn')
 const orderListContent = document.querySelector('.order-list-content')
 const orderListBody = document.querySelector('.order-list-body')
 const orderListHeader = document.querySelector('.order-list-header')
@@ -324,7 +325,7 @@ async function generateCard(cardItemsArray) {
                                 </ul>
                             </a>`
 
-                            cardItem= `
+                            cardItem = `
                             <div class="menu-item h-7vh row w-95  bg-secondary-subtle2 text-white mx-auto my-2  px-1 px-lg-5 rounded rounded-5 overflow-hidden " id="food-${item.id}">
                                 <div class="menu-item-text col-8 col-sm-9 d-flex align-items-center p-0 h-100 ">
                                     ${addCard}
@@ -742,6 +743,21 @@ async function changeAddBtn(e) {
 
 }
 
+function closeCard() {
+    orderListBody.classList.remove('fade-in')
+    orderListBody.classList.add('fade-out')
+    orderListHeader.classList.remove('fade-in')
+    orderListHeader.classList.add('fade-out')
+    setTimeout(() => {
+        orderListContent && orderListContent.classList.remove('fade-in-width');
+        orderListContent && orderListContent.classList.add('fade-out-width');
+    }, 170);
+
+    setTimeout(() => {
+        orderListContent && orderListContent.classList.add('visually-hidden');
+    }, 1000);
+}
+
 // Events
 
 document.addEventListener('click', e => {
@@ -772,6 +788,8 @@ document.addEventListener('click', e => {
 
 })
 
+
+
 document.addEventListener('keydown', e => {
     const dialog = document.querySelector('.dialog')
     if (e.key == 'Escape') {
@@ -780,21 +798,12 @@ document.addEventListener('keydown', e => {
             dialog.remove()
         }, 600);
 
-
-
-        orderListBody.classList.remove('fade-in')
-        orderListBody.classList.add('fade-out')
-        orderListHeader.classList.remove('fade-in')
-        orderListHeader.classList.add('fade-out')
-        setTimeout(() => {
-            orderListContent && orderListContent.classList.remove('fade-in-width');
-            orderListContent && orderListContent.classList.add('fade-out-width');
-        }, 170);
-
-        setTimeout(() => {
-            orderListContent && orderListContent.classList.add('visually-hidden');
-        }, 1000);
+        closeCard()
     }
+})
+
+closeCardBtn.addEventListener('click', e => {
+    closeCard()
 })
 
 
@@ -925,4 +934,6 @@ async function getJson(arrayStringName) {
 
 // callApiFunctions(); // Fetch data from FireBase 
 callJsonFunctions() // Fetch data from dbJSON
+
+
 
