@@ -380,7 +380,7 @@ function generateDialog(item) {
     const dialogElement = `
     <div class="dialog fade-in col-11 col-sm-10 col-md-7 col-lg-5 col-xl-3 w-xl-30 d-flex flex-column mx-auto rounded rounded-4 overflow-hidden position-fixed">
         <div class=" w-100 d-flex justify-content-center align-items-center rounded rounded-top-4 overflow-hidden ">
-        <b class="close-dialog-btn text-bg-dark text-white text-center position-absolute top-1 start-5 fs-2  rounded-4 px-3 pt-1" >✕</b>    
+        <b class="close-dialog-btn text-danger text-center position-absolute top-1 start-5 fs-2 translate-middle rounded-4 px-3 pt-1" >✕</b>    
         <img src="images/${item.imgName}" class="rounded-top-4 w-100" alt="" />
         </div>
         <div class="dialog-cart py-3 w-100 d-flex justify-content-center  rounded-bottom-4 overflow-hidden align-items-center bg-secondary">
