@@ -118,27 +118,6 @@ let category = [];
 
 let foods = [];
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Functions
 
 function changeTheme(themeId) {
@@ -473,7 +452,7 @@ async function carouselHandler() {
     const catItems = document.querySelectorAll(".cat-item");
     catItems.forEach((cat, index) => {
         cat.addEventListener("click", (e) => {
-            // e.preventDefault();
+             e.preventDefault();
 
             const catLink = e.target.closest(".category a");
             const catHref = catLink.getAttribute("href").split("#")[1];
@@ -797,7 +776,7 @@ document.addEventListener('click', e => {
     const foodItem = e.target.closest('.menu-item')
     const addBtn = e.target.closest('.add-btn')
     const addedBtn = e.target.closest('.added-to-card')
-    
+
     if (foodItem && !dialog && !addBtn && !addedBtn && !allCatItems) {
         const foodId = foodItem.id.split('-')[1]
         const food = foods.find(item => item.id == foodId)
@@ -818,7 +797,7 @@ document.addEventListener('click', e => {
         document.body.classList.add('overflow-auto')
     }
 
-    if (e.target.closest('.dialog-container') || e.target.closest('.order-list-content') || e.target.closest('.order-list-icon') || allCatItems) {
+    if (e.target.closest('.dialog-container') || e.target.closest('.order-list-content') || e.target.closest('.order-list-icon') || e.target.closest('#allCategoriesBtn')) {
         document.body.classList.remove('overflow-auto')
         document.body.classList.add('overflow-hidden')
 
@@ -828,7 +807,7 @@ document.addEventListener('click', e => {
         document.body.classList.remove('overflow-hidden')
         document.body.classList.add('overflow-auto')
     }
-    
+
 
 })
 
@@ -847,7 +826,15 @@ document.addEventListener('keydown', e => {
     document.body.classList.remove('overflow-hidden')
     document.body.classList.add('overflow-auto')
 
-    allCatItems.classList.add('d-none')
+
+    allCatItems.innerHTML = ''
+
+    allCatItems.classList.remove('fade-in')
+    allCatItems.classList.add('fade-out')
+
+    setTimeout(() => {
+        allCatItems.classList.add('visually-hidden')
+    }, 500);
 
 })
 
@@ -996,6 +983,37 @@ allCategoriesBtn.addEventListener('click', e => {
 
 function allCatItemsGenerate() {
 
-    allCatItems.classList.remove('d-none')
+    allCatItems.classList.remove('visually-hidden')
+    allCatItems.classList.remove('fade-out')
+    allCatItems.classList.add('fade-in')
+
+    category.forEach((catItem) => {
+        const catTitleShort = catItem.title.split('|')[0]
+        const castItem = `
+                <div class="cat-item bg-primary-subtle2 d-flex flex-column justify-content-center align-items-center rounded rounded-4 pt-1 w-33vw h-13vh w-sm-18vw h-sm-14vh w-md-16vw h-md-70">
+                    <a href="#cat-${catItem.id}" class="d-flex flex-column justify-content-center align-items-center">
+                        <img class="cat-item-image w-45 w-md-50" src="images/icons/${catItem.imgName}" alt="" />
+                        <p class="text-center">${catTitleShort}</p>
+                    </a>
+                </div>`
+        allCatItems.insertAdjacentHTML("afterbegin", castItem);
+    });
+
 
 }
+
+
+allCatItems.addEventListener('click', e => {
+    console.log(e.target);
+    if (e.target.closest('.cat-item')) {
+
+        allCatItems.classList.remove('fade-in')
+        allCatItems.classList.add('fade-out')
+
+        setTimeout(() => {
+            allCatItems.classList.add('visually-hidden')
+        }, 500);
+
+        allCatItems.innerHTML = ''
+    }
+})
