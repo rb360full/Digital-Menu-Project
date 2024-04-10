@@ -421,3 +421,12 @@ li {
 .close-dialog-btn {
   cursor: pointer;
 }
+
+
+
+.all-cat-items{
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--om-secondary-subtle2);
+  z-index: 2500;
+}

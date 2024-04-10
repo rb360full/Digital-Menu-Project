@@ -1,5 +1,7 @@
 // Variables
 
+const allCategoriesBtn = document.getElementById('allCategoriesBtn')
+const allCatItems = document.querySelector('.all-cat-items')
 const mainContainer = document.querySelector(".main");
 const categoryContainer = document.querySelector(".category");
 const categoryElem = document.querySelector(".category");
@@ -795,7 +797,8 @@ document.addEventListener('click', e => {
     const foodItem = e.target.closest('.menu-item')
     const addBtn = e.target.closest('.add-btn')
     const addedBtn = e.target.closest('.added-to-card')
-    if (foodItem && !dialog && !addBtn && !addedBtn) {
+    
+    if (foodItem && !dialog && !addBtn && !addedBtn && !allCatItems) {
         const foodId = foodItem.id.split('-')[1]
         const food = foods.find(item => item.id == foodId)
         let isSummaryClicked = e.target.closest('details')
@@ -815,7 +818,7 @@ document.addEventListener('click', e => {
         document.body.classList.add('overflow-auto')
     }
 
-    if (e.target.closest('.dialog-container') || e.target.closest('.order-list-content') || e.target.closest('.order-list-icon')) {
+    if (e.target.closest('.dialog-container') || e.target.closest('.order-list-content') || e.target.closest('.order-list-icon') || allCatItems) {
         document.body.classList.remove('overflow-auto')
         document.body.classList.add('overflow-hidden')
 
@@ -825,6 +828,7 @@ document.addEventListener('click', e => {
         document.body.classList.remove('overflow-hidden')
         document.body.classList.add('overflow-auto')
     }
+    
 
 })
 
@@ -842,6 +846,8 @@ document.addEventListener('keydown', e => {
     }
     document.body.classList.remove('overflow-hidden')
     document.body.classList.add('overflow-auto')
+
+    allCatItems.classList.add('d-none')
 
 })
 
@@ -981,3 +987,15 @@ async function getJson(arrayStringName) {
 
 // callApiFunctions(); // Fetch data from FireBase 
 callJsonFunctions() // Fetch data from dbJSON
+
+allCategoriesBtn.addEventListener('click', e => {
+    allCatItemsGenerate()
+    document.body.classList.remove('overflow-auto')
+    document.body.classList.add('overflow-hidden')
+})
+
+function allCatItemsGenerate() {
+
+    allCatItems.classList.remove('d-none')
+
+}
