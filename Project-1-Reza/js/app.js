@@ -779,7 +779,7 @@ document.addEventListener('click', e => {
     const addBtn = e.target.closest('.add-btn')
     const addedBtn = e.target.closest('.added-to-card')
 
-    if (foodItem && !dialog && !addBtn && !addedBtn && !allCatItems) {
+    if (foodItem && !dialog && !addBtn && !addedBtn ) {
         const foodId = foodItem.id.split('-')[1]
         const food = foods.find(item => item.id == foodId)
         let isSummaryClicked = e.target.closest('details')
