@@ -452,7 +452,7 @@ async function carouselHandler() {
     const catItems = document.querySelectorAll(".cat-item");
     catItems.forEach((cat, index) => {
         cat.addEventListener("click", (e) => {
-            e.preventDefault();
+            // e.preventDefault();
 
             const catLink = e.target.closest(".category a");
             const catHref = catLink.getAttribute("href").split("#")[1];
@@ -482,13 +482,15 @@ async function carouselHandler() {
             // Scroll the div element horizontally to position the clicked cat element in the middle
 
 
+            categoty.scrollTo({
+                left: finalScrollX,
+                behavior: "smooth",
+            });
             setTimeout(() => {
-                categoty.scrollTo({
-                    left: finalScrollX,
-                    behavior: "smooth",
-                });
                 window.location.href = `#${catHref}`
             }, 500);
+
+
 
             //  e.target.click()
 
@@ -779,7 +781,7 @@ document.addEventListener('click', e => {
     const addBtn = e.target.closest('.add-btn')
     const addedBtn = e.target.closest('.added-to-card')
 
-    if (foodItem && !dialog && !addBtn && !addedBtn ) {
+    if (foodItem && !dialog && !addBtn && !addedBtn) {
         const foodId = foodItem.id.split('-')[1]
         const food = foods.find(item => item.id == foodId)
         let isSummaryClicked = e.target.closest('details')
